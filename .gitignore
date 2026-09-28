@@ -1,0 +1,5 @@
+build/
+keluaran/*.plugin
+keluaran/*.zip
+.DS_Store
+__pycache__/

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INTEGRAL Mesin di Cowork — Panduan Auditor</title>
+<style>
+  :root{--bg:#f6f7fb;--card:#fff;--ink:#1e2330;--muted:#5b6472;--line:#e5e8ef;--indigo:#4f46e5;--indigo-soft:#eef0fe;--green:#0f9d58;--green-soft:#e6f4ec;--amber:#c77700;--amber-soft:#fdf1dd;--red:#c0392b;--red-soft:#fbe9e7}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;font-size:15.5px}
+  .wrap{max-width:860px;margin:0 auto;padding:28px 18px 60px}
+  header{background:linear-gradient(135deg,#4f46e5,#6d5ce7);color:#fff;border-radius:16px;padding:24px 26px}
+  header h1{margin:0 0 4px;font-size:24px} header p{margin:0;opacity:.92;font-size:14px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin:16px 0}
+  h2{margin:0 0 10px;font-size:18px}
+  ol{padding-left:22px} li{margin:6px 0}
+  code{background:#f0f1f6;padding:1px 5px;border-radius:4px;font-size:13px;font-family:ui-monospace,Menlo,monospace}
+  pre{background:#1e2330;color:#e8eaf0;padding:12px 14px;border-radius:10px;font-size:13px;overflow:auto}
+  .c{border-left:4px solid var(--indigo);background:var(--indigo-soft);padding:10px 14px;border-radius:8px;margin:10px 0}
+  .c.warn{border-left-color:var(--amber);background:var(--amber-soft)}
+  .c.bad{border-left-color:var(--red);background:var(--red-soft)}
+  .c.ok{border-left-color:var(--green);background:var(--green-soft)}
+  table{width:100%;border-collapse:collapse;font-size:14px} th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top} th{background:var(--indigo-soft);color:#3730a3;font-size:12px;text-transform:uppercase}
+  .kecil{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body><div class="wrap">
+<header>
+  <h1>INTEGRAL Mesin di Cowork</h1>
+  <p>Panduan auditor — dari Surat Tugas sampai unggah ke INTEGRAL. Satu halaman, dibaca sekali.</p>
+</header>
+
+<section>
+  <h2>Apa ini</h2>
+  <p>Plugin Cowork berisi 19 skill jenis pengawasan INTEGRAL dan pengetahuannya (pola temuan, teks regulasi yang sudah dicocokkan ke sumber resmi, template DPP/PIA/LHP). Cowork mengerjakan <b>substansi</b> di laptop Bapak/Ibu; keluarannya <b>draf</b> DPP, Laporan PIA, KKP, dan LHP awal. Persetujuan, laporan final, dan tindak lanjut tetap di <b>INTEGRAL</b> — di sana draf ini diunggah.</p>
+  <div class="c warn"><b>Cowork tidak menahan apa pun.</b> Di INTEGRAL, temuan tanpa Sebab atau tanpa kutipan ditolak sistem. Di Cowork, yang menahannya adalah <b>daftar periksa</b> di akhir <code>Paket-Analisis.md</code> — dan Bapak/Ibu.</div>
+</section>
+
+<section>
+  <h2>1 · Pasang (sekali)</h2>
+  <ol>
+    <li>Terima berkas <code>integral-mesin-&lt;versi&gt;.plugin</code>. Versi = tanggal bangun, mis. <code>2026.9.28</code>.</li>
+    <li>Di Cowork: <b>Customize → Plugins → pasang dari berkas</b>, pilih berkas itu.</li>
+    <li>Tidak ada kunci, token, atau akun tambahan.</li>
+  </ol>
+  <p class="kecil">Bila ada versi baru, pasang ulang dengan cara yang sama. Pengetahuan <b>tidak</b> diperbarui dengan cara lain; skill mencetak versinya di tiap keluaran, jadi ketahuan bila masih memakai versi lama.</p>
+</section>
+
+<section>
+  <h2>2 · Siapkan folder penugasan</h2>
+<pre>2026-09-reviu-rka-ditjen-x/
+├── 00-input/           Surat Tugas, sasaran/lingkup, entri PKPT (bila ada)
+├── 01-objek/           dokumen yang diperiksa — TOR/RAB, KAK/HPS/kontrak, LK, LKE, …
+├── 02-kriteria/        regulasi/SOP tambahan yang ingin dipakai sebagai kriteria (opsional)
+├── 03-bukti-lapangan/  hasil pemeriksaan fisik, notulen diskusi (opsional — bila ada, dianalisis)
+└── 90-keluaran/        (dibuat sendiri oleh skill)</pre>
+  <p>Dokumen yang <b>wajib</b> per jenis pengawasan tercantum di masing-masing skill; yang tidak ada akan dicatat sebagai keterbatasan, bukan dikarang.</p>
+</section>
+
+<section>
+  <h2>3 · Jalankan</h2>
+  <ol>
+    <li>Buka folder penugasan di Cowork, lalu tulis: <b>"kerjakan penugasan ini"</b>.</li>
+    <li>Skill menentukan jenis pengawasan dari Surat Tugas. Bila ragu, ia <b>bertanya</b> — jawab, jangan biarkan menebak.</li>
+    <li>Ia menyusun <b>DPP</b> dulu dan <b>berhenti</b>. Baca DPP-nya: sasaran, lingkup, risiko, hipotesis. Koreksi di percakapan bila perlu. Ini titik koreksi terpenting — lingkup yang salah di sini merambat ke semua yang berikutnya.</li>
+    <li>Lanjutkan: <b>Laporan PIA</b> (dengan penilaian kelayakan), lalu analisis, <b>KKP</b>, dan <b>LHP awal</b>. Untuk LKE SPIP yang besar, ia bekerja per komponen dan memberi tahu mana yang belum.</li>
+    <li>Semua keluaran ada di <code>90-keluaran/</code>, berlabel <b>DRAF</b>.</li>
+  </ol>
+  <div class="c">Permintaan lanjutan bisa ditujukan ke temuan tertentu: "perbaiki T-002, tambahkan kutipan kondisi", "cek juga aspek jadwal", "T-004 bukan temuan, buang". Skill mengubah yang diminta, bukan mengulang dari nol.</div>
+</section>
+
+<section>
+  <h2>4 · Periksa — bagian yang tidak boleh dilewati</h2>
+  <p>Buka <code>Paket-Analisis.md</code>. Daftar periksanya sudah terisi oleh skill; tugas Bapak/Ibu memastikan jawabannya benar. Yang paling sering salah, dan paling mahal bila lolos:</p>
+  <table>
+    <tr><th>Periksa</th><th>Cara cepat</th></tr>
+    <tr><td><b>Kutipan kondisi</b> — berkas + halaman</td><td>Buka satu-dua halaman yang disebut. Bila kutipannya tidak ada di sana, seluruh temuan itu dicurigai.</td></tr>
+    <tr><td><b>Pasal di kolom Kriteria</b></td><td>Pasal harus disertai bunyinya dan sumber teksnya. "Belum terverifikasi" berarti Bapak/Ibu yang mengecek ke regulasinya. Pasal yang terdengar masuk akal belum tentu ada — 38 dari 85 pola temuan pernah salah karena itu.</td></tr>
+    <tr><td><b>Sebab</b></td><td>"Tidak cukup data untuk menyimpulkan penyebab" adalah jawaban yang <b>sah</b>. Sebab yang meyakinkan tetapi tanpa bukti lebih berbahaya.</td></tr>
+    <tr><td><b>Klaim "dokumen tidak memuat X"</b></td><td>Lihat §Dokumen: halaman mana yang dibaca. Bila tidak seluruhnya, klaim itu belum boleh jadi temuan.</td></tr>
+    <tr><td><b>Temuan lemah</b></td><td>Dibuang, bukan dipoles. Temuan yang masuk INTEGRAL akan dibaca pimpinan dan auditi.</td></tr>
+  </table>
+  <div class="c bad"><b>Kutipan yang salah dibetulkan di sumbernya.</b> Bila menemukan pasal atau pola yang keliru, catat nama skill/pola-nya dan sampaikan ke pengelola pengetahuan. Perbaikan masuk ke repo INTEGRAL, diuji, lalu terbawa ke plugin berikutnya — supaya tidak lahir lagi di penugasan lain.</div>
+</section>
+
+<section>
+  <h2>5 · Unggah ke INTEGRAL</h2>
+  <ol>
+    <li>Buka penugasan yang sesuai di INTEGRAL.</li>
+    <li>Unggah dari <code>90-keluaran/</code>: <b>DPP</b>, <b>Laporan PIA</b>, <b>KKP</b> (+ xlsx/LKE bila ada), <b>LHP awal</b>.</li>
+    <li>Persetujuan per temuan, laporan final, dan tindak lanjut dikerjakan di INTEGRAL. Yang ditolak dikembalikan ke Cowork dengan catatan ("perbaiki T-003: …").</li>
+  </ol>
+  <div class="c ok">Data penugasan diproses lewat API Anthropic — sama seperti INTEGRAL; bukan risiko baru. Yang berbeda: tiap auditor memakai langganannya sendiri, tidak ada kunci bersama.</div>
+</section>
+
+<section>
+  <h2>Bila ada masalah</h2>
+  <table>
+    <tr><th>Gejala</th><th>Kemungkinan</th></tr>
+    <tr><td>Skill tidak terpicu</td><td>Sebut jenisnya: "kerjakan penugasan ini sebagai reviu RKA-K/L" — atau pastikan plugin terpasang (Customize → Plugins).</td></tr>
+    <tr><td>Langsung ke temuan tanpa DPP/PIA</td><td>Hentikan, minta "susun DPP dulu". Kecuali DPP/PIA memang sudah ada di <code>00-input/</code>.</td></tr>
+    <tr><td>Kriteria banyak "belum terverifikasi"</td><td>Regulasinya tidak ada di pengetahuan. Unggah teksnya ke <code>02-kriteria/</code> dan minta ulang bagian itu; kirim juga ke pengelola agar masuk plugin berikutnya.</td></tr>
+    <tr><td>Dokumen besar tidak selesai dibaca</td><td>Lihat §Dokumen di Paket. Minta "lanjutkan bagian X" — jangan terima klaim ketiadaan atas bagian yang belum dibaca.</td></tr>
+  </table>
+</section>
+
+<p class="kecil">Inspektorat II — Itjen Komdigi · INTEGRAL Mesin · desain: <code>docs/ARSITEKTUR-COWORK-MESIN.html</code> di repo INTEGRAL.</p>
+</div></body></html>
