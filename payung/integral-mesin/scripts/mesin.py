@@ -12,7 +12,8 @@ _PERENCANAAN/, _PKP/, _KKP/, _LHP/, _QA-SAIPI/, _AUDIT-TRAIL/, Paket-Analisis.md
     python3 mesin.py cek
     python3 mesin.py mulai          <penugasan>
     python3 mesin.py ulang-manifest <penugasan>      # setelah auditor menambah dokumen
-    python3 mesin.py perencanaan    <penugasan>      # _PERENCANAAN/*.md → .docx
+    python3 mesin.py perencanaan    <penugasan>      # _PERENCANAAN/dpp.json, pia.json → .md → .docx
+    python3 mesin.py perencanaan    --field dpp|pia  # daftar field template
     python3 mesin.py periksa        <penugasan>      # kontrak _KKP/temuan.json
     python3 mesin.py kkp            <penugasan>      # periksa → isolasi → KKP → QC
     python3 mesin.py lhp            <penugasan> --judul "…" --auditi "…" [--gambaran-umum "…"]
@@ -116,23 +117,61 @@ def cmd_ulang_manifest(a) -> int:
     return _jalan("generate_session_manifest.py", "--penugasan", str(d), "--force")
 
 
+_PERENCANAAN = (("dpp", "DPP.md"), ("pia", "Laporan-PIA.md"))
+
+
 def cmd_perencanaan(a) -> int:
-    d = _penugasan(a.penugasan)
+    """`<jenis>.json` → `<Nama>.md` lewat template wiki → `.docx`.
+
+    Perendernya SAMA dengan server (export_perencanaan.render_template), jadi
+    tabel {{#each}}, blok kondisional, dan `[BELUM DIISI]` berperilaku identik.
+    Skill cukup menulis datanya; tata letak dokumen bukan urusan skill.
+    """
+    os.environ["INTEGRAL_AKAR"] = str(akar())
     sys.path.insert(0, str(SKRIP))
+    import export_perencanaan as ep
+    if a.field:
+        f = ep.template_fields(a.field, a.skill)
+        tpl = ep.resolve_template(a.field, a.skill)
+        print(f"── template {tpl.relative_to(akar()) if tpl else '(tak ada)'}")
+        print("  wajib   : " + ", ".join(f["field_required"]))
+        print("  opsional: " + ", ".join(f["field_optional"]))
+        return 0 if tpl else 4
+    if not a.penugasan:
+        print("✗ sebutkan folder penugasan, atau --field dpp|pia untuk melihat daftar field")
+        return 4
+    d = _penugasan(a.penugasan)
     try:
         from perencanaan_docx import markdown_ke_docx
     except ImportError as e:
         print(f"✗ {e}")
         return 6
     ada = 0
-    for nama in ("DPP.md", "Laporan-PIA.md"):
+    for jenis, nama in _PERENCANAAN:
+        data = d / "_PERENCANAAN" / f"{jenis}.json"
         md = d / "_PERENCANAAN" / nama
+        if data.exists():
+            try:
+                fields = json.loads(data.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as e:
+                print(f"✗ {data.relative_to(d)} bukan JSON sah: {e}")
+                return 5
+            tpl = ep.resolve_template(jenis, a.skill or fields.get("skill"))
+            if tpl is None:
+                print(f"✗ template {jenis} tak ada di paket")
+                return 4
+            md.write_text(ep.render_template(tpl.read_text(encoding="utf-8-sig"), fields), encoding="utf-8")
+            kosong = [k for k in ep.template_fields(jenis, a.skill or fields.get("skill"))["field_required"]
+                      if not fields.get(k)]
+            print(f"  ✓ {md.relative_to(d)} dari {data.name} · template {tpl.name}")
+            if kosong:
+                print(f"    [BELUM DIISI] pada field wajib: {', '.join(kosong)}")
         if md.exists():
             out = markdown_ke_docx(md.read_text(encoding="utf-8"), md.with_suffix(".docx"))
             print(f"  ✓ {out.relative_to(d)}")
             ada += 1
         else:
-            print(f"  – {md.relative_to(d)} belum ada")
+            print(f"  – {jenis}.json / {nama} belum ada")
     return 0 if ada else 4
 
 
@@ -253,7 +292,12 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="perintah", required=True)
     sub.add_parser("cek").set_defaults(f=cmd_cek)
-    for nama, f in (("mulai", cmd_mulai), ("ulang-manifest", cmd_ulang_manifest), ("perencanaan", cmd_perencanaan),
+    p = sub.add_parser("perencanaan")
+    p.add_argument("penugasan", nargs="?")
+    p.add_argument("--field", choices=("dpp", "pia"), help="tampilkan daftar field template, lalu berhenti")
+    p.add_argument("--skill", help="template spesifik <jenis>-<skill>.md bila ada (bawaan: -default)")
+    p.set_defaults(f=cmd_perencanaan)
+    for nama, f in (("mulai", cmd_mulai), ("ulang-manifest", cmd_ulang_manifest),
                     ("periksa", cmd_periksa), ("kkp", cmd_kkp), ("paket", cmd_paket)):
         p = sub.add_parser(nama)
         p.add_argument("penugasan")
@@ -273,6 +317,9 @@ def main() -> int:
         return a.f(a)
     except SystemExit as e:
         return int(e.code or 0)
+    except ModuleNotFoundError as e:  # pustaka dimuat malas di dalam skrip salinan FULL
+        print(f"✗ pustaka Python tak ada: {e.name} — jalankan `mesin.py cek`")
+        return 6
     except Exception as e:  # noqa: BLE001 — laporkan, jangan jejak galat panjang
         print(f"✗ galat: {type(e).__name__}: {e}")
         return 1

@@ -75,13 +75,18 @@ _PEMICU = {
 # doktrin 17 Jun 2026 dan placeholder per skill); isolasi sumber dari Cowork v4.3 (FULL tak punya).
 _DARI_FULL = ("backend/v6/scripts/render_kkp.py", "backend/v6/scripts/render_lhp.py",
               "backend/v6/scripts/qc_saipi.py", "backend/v6/scripts/audit_trail.py",
-              "backend/app/perencanaan_docx.py")
+              "backend/app/perencanaan_docx.py", "backend/app/export_perencanaan.py")
 _DARI_VENDOR = ("vendor/cowork-v4.3/generate_session_manifest.py", "vendor/cowork-v4.3/check_isolation.py")
 # Tambalan minimal. Build GAGAL bila teks sumber berubah — tambalan tak pernah diam-diam hilang.
 _TAMBAL = {
     "qc_saipi.py": ('CHECKLIST_PATH = ROOT / "skills" / "kepatuhan-saipi" / "references" / "checklist-saipi-per-penugasan.json"',
                     'CHECKLIST_PATH = Path(__import__("os").environ.get("INTEGRAL_CHECKLIST_SAIPI") or '
                     'ROOT / "skills" / "kepatuhan-saipi" / "references" / "checklist-saipi-per-penugasan.json")'),
+    # Server membaca akar wiki dari app.config; di paket, wiki ada di AKAR/wiki.
+    # Yang dipakai mesin hanya resolve_template/template_fields/render_template —
+    # write_perencanaan (gerbang PIA server) tak pernah dipanggil di Cowork.
+    "export_perencanaan.py": ('    from app.config import get_settings\n    return get_settings().wiki_path / "templates"',
+                              '    import os\n    return Path(os.environ["INTEGRAL_AKAR"]) / "wiki" / "templates"'),
 }
 
 
