@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INTEGRAL Mesin — Desain v2</title>
+<style>
+  :root{
+    --bg:#f6f7fb; --card:#fff; --ink:#1e2330; --muted:#5b6472; --line:#e5e8ef;
+    --indigo:#4f46e5; --indigo-soft:#eef0fe;
+    --green:#0f9d58; --green-soft:#e6f4ec; --amber:#c77700; --amber-soft:#fdf1dd;
+    --gray:#8a93a3; --gray-soft:#eef0f4; --red:#c0392b; --red-soft:#fbe9e7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;font-size:15px}
+  .wrap{max-width:1000px;margin:0 auto;padding:32px 20px 64px}
+  header.hero{background:linear-gradient(135deg,#4f46e5,#6d5ce7);color:#fff;border-radius:16px;
+    padding:28px 30px;box-shadow:0 8px 24px rgba(79,70,229,.18)}
+  header.hero h1{margin:0 0 6px;font-size:26px;letter-spacing:-.3px}
+  header.hero p{margin:0;opacity:.92;font-size:14px}
+  .meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+  .chip{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);padding:4px 10px;border-radius:999px;font-size:12px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:18px 0;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  h2{margin:0 0 12px;font-size:19px}
+  h3{margin:18px 0 8px;font-size:15.5px}
+  p{margin:8px 0}
+  .note{font-size:13px;color:var(--muted)}
+  .callout{border-left:4px solid var(--indigo);background:var(--indigo-soft);padding:10px 14px;border-radius:8px;margin:12px 0}
+  .warn{border-left-color:var(--amber);background:var(--amber-soft)}
+  .bad{border-left-color:var(--red);background:var(--red-soft)}
+  .ok{border-left-color:var(--green);background:var(--green-soft)}
+  code{background:#f0f1f6;padding:1px 5px;border-radius:4px;font-size:12.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  pre{background:#1e2330;color:#e8eaf0;padding:14px 16px;border-radius:10px;overflow:auto;font-size:12.5px;line-height:1.5}
+  pre code{background:none;color:inherit;padding:0}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13.5px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--indigo-soft);color:#3730a3;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+  .badge{display:inline-block;padding:2px 9px;border-radius:6px;font-size:12px;font-weight:600;white-space:nowrap}
+  .b-ok{background:var(--green-soft);color:var(--green)}
+  .b-run{background:var(--amber-soft);color:var(--amber)}
+  .b-no{background:var(--red-soft);color:var(--red)}
+  .b-gray{background:var(--gray-soft);color:var(--gray)}
+  ol.steps{padding-left:22px} ol.steps li{margin:6px 0}
+  footer{margin-top:24px;font-size:12px;color:var(--gray);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>INTEGRAL Mesin — Desain v2</h1>
+  <p>Hasil cek menyeluruh repo FULL, perbandingan dengan Cowork v4, dan usulan perbaikan sebelum plugin dibangun ulang</p>
+  <div class="meta">
+    <span class="chip">29 Sep 2026</span>
+    <span class="chip">Usulan — belum dikerjakan</span>
+    <span class="chip">Menggantikan plugin 2026.9.28</span>
+  </div>
+</header>
+
+<section>
+  <h2>1 · Ringkasan</h2>
+  <p>Plugin versi pertama (2026.9.28) menunjukkan jalurnya bisa berjalan, tetapi pemeriksaan hari ini menemukan tiga hal yang harus dibereskan sebelum plugin dibagikan:</p>
+  <ol class="steps">
+    <li><b>Kutipan salah masih tersisa di FULL</b> — 16 sebutan di 14 berkas, termasuk dua SKILL.md dan prompt agen server. Uji yang kita buat 27 Sep punya tiga lubang, sehingga semuanya lolos dan ikut terbawa ke plugin.</li>
+    <li><b>Plugin menulis keluaran secara bebas</b>, lewat skill docx umum. Padahal INTEGRAL sudah punya perender KKP/LHP dan QC SAIPI yang mandiri, mengikuti doktrin terbaru, dan cocok dengan 18 kerangka LHP-nya.</li>
+    <li><b>Plugin tidak punya pengaman kontaminasi lintas-sesi.</b> Cowork v4.3 pernah memilikinya, setelah terbukti Claude membawa fakta dari penugasan lain ke dalam temuan. Di server INTEGRAL pengaman itu tidak diperlukan; di Cowork diperlukan.</li>
+  </ol>
+  <p>Desain v2 menjawab ketiganya: <b>A</b> — perbaikan di FULL (teks + satu prompt + uji yang lebih luas), <b>B</b> — plugin v2 di folder <code>integral-mesin</code>, <b>C</b> — repo Cowork dibekukan sebagai arsip leluhur.</p>
+</section>
+
+<section>
+  <h2>2 · Hasil cek FULL</h2>
+  <p>Diperiksa 303 berkas: seluruh <code>knowledge/</code> (skill, references, wiki, template, CACM) dan <code>backend/app/prompts/</code>. Tiap sitasi dicocokkan ke 20 kunci regulasi terverifikasi di <code>wiki/konteks/regulasi/</code>, dan daftar salah kaprah dicari di mana pun. Hasilnya dipilah menjadi tiga kelompok.</p>
+
+  <h3>2.1 Terbukti salah — 16 sebutan, 14 berkas</h3>
+  <table>
+    <tr><th style="width:44%">Berkas</th><th>Kesalahan</th><th>Dibaca oleh</th></tr>
+    <tr><td><code>skills/reviu-pengadaan/SKILL.md:82</code></td><td rowspan="4">"Perpres 16/2018 Pasal 26 ayat (5): HPS dibuat dari minimal 2 sumber harga independen". Ayat (5) mengatur <i>kegunaan</i> HPS; bunyi "minimal 2 sumber" tidak ada di pasal mana pun dari Pasal 26</td><td rowspan="2"><b>agen</b> (Cowork &amp; server)</td></tr>
+    <tr><td><code>skills/audit-pengadaan/SKILL.md:96</code></td></tr>
+    <tr><td><code>backend/app/prompts/anggota_tim.md:249</code></td><td><b>agen server FULL</b></td></tr>
+    <tr><td><code>wiki/templates/pkp/pkp-reviu-pengadaan.md:46</code></td><td>agen (langkah kerja PKP)</td></tr>
+    <tr><td><code>cacm/kriteria/PBJ-UNITCOST-WAJAR.yaml:19</code></td><td>"Pasal 26 ayat 5 (HPS dari survei pasar)" — sama</td><td>CACM</td></tr>
+    <tr><td><code>meta/graduasi-skill-spesifik/references/03-ekstraksi-redflag.md:95</code></td><td>"Perlem LKPP 12/2021 Pasal 26 ayat (5)" — Perlem ini bernomor lampiran; pasal itu tak terverifikasi</td><td>meta-skill</td></tr>
+    <tr><td><code>wiki/README.md:69</code></td><td>contoh frontmatter RP-08 yang lama</td><td>dokumentasi</td></tr>
+    <tr><td>README indeks pola: <code>audit-kinerja</code> (AK-19), <code>audit-pengadaan</code> (AP-23), <code>reviu-pengadaan</code> (RP-08, RP-16), <code>konsultasi-pengadaan</code> (KSP-59), <code>evaluasi-spip</code> (ESP-35..38), <code>evaluasi-manajemen-risiko</code> (EMR-42)</td><td>kolom kriteria masih versi <b>sebelum</b> dibetulkan: "PP 8/2006 prinsip efisiensi", "Pasal 1 angka 18", "Pasal 26 ayat (5)", "SAIPI 2010 (consulting)", "Perka BPKP", "Permenkominfo"</td><td>agen yang membaca indeks</td></tr>
+    <tr><td><code>wiki/konteks/pola-temuan-berulang.md:69</code>, <code>pattern-temuan.md:610</code></td><td>"Permenkominfo 6/2017" — instrumennya <i>Pedoman</i> Menteri</td><td>agen (konteks)</td></tr>
+  </table>
+  <div class="callout bad"><b>Yang paling serius adalah empat baris pertama</b>, karena menyuruh agen — di Cowork maupun di server FULL — memakai kutipan yang salah sebagai kriteria temuan KRITIS. Pola RP-08 sendiri sudah dibetulkan 27 Sep, tetapi skill yang memanggilnya belum.</div>
+
+  <h3>2.2 Mengapa lolos dari uji 27 Sep — tiga lubang</h3>
+  <table>
+    <tr><th>Lubang</th><th>Akibat</th></tr>
+    <tr><td><b>Cakupan</b> — <code>uji_kutipan_pola.py</code> hanya memeriksa berkas pola dan melewatkan README-nya; SKILL.md, template, konteks, CACM, dan prompt tidak diperiksa sama sekali</td><td>kesalahan di luar 85 berkas pola tak terlihat</td></tr>
+    <tr><td><b>Atribusi</b> — pasal dikaitkan ke regulasi <i>pertama yang cocok</i> di segmen, bukan yang <i>terdekat sebelumnya</i>. "PP 60/2008 Pasal 46, SAIPI, UU 15/2004 Pasal 20" membuat Pasal 46 tercatat milik UU 15/2004</td><td>vonis salah ke dua arah; lolos di pola hanya karena kebetulan tak ada tabrakan</td></tr>
+    <tr><td><b>Deteksi "peringatan"</b> berdasarkan kata kunci. Pemindai hari ini menganggap baris ber-"→" atau berkata "Ber<i>masalah</i>" (mengandung "salah") sebagai peringatan</td><td>dua SKILL.md dan satu README lolos. Heuristik kata kunci <b>tidak boleh</b> dipakai</td></tr>
+  </table>
+
+  <h3>2.3 Belum terverifikasi — bukan salah, tetapi teksnya belum kita punya</h3>
+  <ul>
+    <li><b>Perpres 16/2018</b> — sekitar 30 sebutan pasal di luar daftar terverifikasi (Pasal 11, 19, 15, 4, 13, 20, …). Teksnya sebagian ada di <code>skills/audit-pengadaan/references/01-perpres-16-2018.md</code> (diverifikasi dari PDF 18 Jul), tetapi belum masuk daftar mesin. Angka pastinya menunggu pemindai dengan atribusi yang benar.</li>
+    <li><b>Regulasi keuangan tanpa teks resmi lokal</b> — PMK 17/2019 (33 sebutan), PP 43/2023 (24), PMK 255/2015 (22), PMK 155/2021 (21), PP 71/2010 (19), dan lainnya. Hampir semuanya milik tiga skill reviu keuangan. Ringkasannya ada di <code>references/</code>, tetapi teks pasalnya belum ada di <code>wiki/konteks/regulasi/</code>.</li>
+    <li><b>Perlem LKPP 12/2021</b> (35 sebutan) — bernomor lampiran, perlu cara verifikasi tersendiri.</li>
+  </ul>
+  <p class="note">Kelompok ini tidak diperbaiki dalam v2. Jumlahnya akan dilaporkan uji yang baru sebagai "belum bisa diperiksa", sehingga ukurannya selalu terlihat — bukan disembunyikan sebagai lolos.</p>
+</section>
+
+<section>
+  <h2>3 · Cowork v4 vs INTEGRAL — dari mana tiap perangkat diambil</h2>
+  <p>Repo Cowork (<code>marchelianaba/audit-system-cowork</code>) adalah <b>audit-system v4.4 (1 Juni 2026)</b>, leluhur INTEGRAL. Semua skill INTEGRAL bernomor versi lebih tinggi, dan INTEGRAL punya tiga skill yang tak ada di Cowork. Tetapi <code>backend/v6/scripts</code> INTEGRAL ternyata adalah <b>turunan skrip Cowork yang sudah dikembangkan</b>, sehingga pilihannya jelas:</p>
+  <table>
+    <tr><th>Perangkat</th><th>Diambil dari</th><th>Alasan</th></tr>
+    <tr><td>19 skill, 85 pola, 12 teks regulasi, template DPP/PIA/LHP</td><td><span class="badge b-ok">INTEGRAL</span></td><td>lebih baru; doktrin 17 Juni (Sebab di semua KKSA), kutipan terverifikasi</td></tr>
+    <tr><td><code>render_kkp.py</code></td><td><span class="badge b-ok">INTEGRAL v6</span> 397 baris</td><td>Cowork (257) masih paradigma lama: reviu tanpa Sebab, pemantauan tanpa Akibat</td></tr>
+    <tr><td><code>render_lhp.py</code></td><td><span class="badge b-ok">INTEGRAL v6</span> 3.205 baris</td><td>18 kerangka LHP INTEGRAL memakai placeholder <b>per skill</b> (<code>{{A1_LATAR_DASAR}}</code> RKA-K/L, <code>{{BAB1_…}}</code> audit pengadaan); versi Cowork (450) hanya mengenal gaya generik</td></tr>
+    <tr><td><code>qc_saipi.py</code> + <code>audit_trail.py</code></td><td><span class="badge b-ok">INTEGRAL v6</span> 839 baris</td><td>lebih baru; aturan REN-* perlu dipetakan dari KP ke DPP/PIA</td></tr>
+    <tr><td><code>validate_kkp_json.py</code> + skema</td><td>identik di keduanya</td><td>—</td></tr>
+    <tr><td><b>Aturan Isolasi Sumber</b>, <code>generate_session_manifest.py</code>, <code>check_isolation.py</code></td><td><span class="badge b-run">Cowork v4.3</span></td><td>satu-satunya sumber; INTEGRAL tak membutuhkannya di server</td></tr>
+    <tr><td>Peta sel LKE</td><td><span class="badge b-ok">INTEGRAL</span> — sudah ada di plugin v1</td><td>peta Cowork memetakan template LKE <b>lama</b> (24 sheet). INTEGRAL sudah rev4 2025: <code>03-peta-blok-pk-rev4.md</code> + <code>fill_lke_safely.py</code>. <b>Peta Cowork tidak diambil.</b></td></tr>
+    <tr><td>Gerbang peran, pipeline aturan deterministik, <code>integral_inject.py</code>, dashboard</td><td><span class="badge b-no">tidak diambil</span></td><td>peran disederhanakan jadi 2 dan HITL ada di FREE; aturan deterministik ditolak doktrin full-AI (30 Jul); unggah manual</td></tr>
+  </table>
+  <div class="callout warn">Koreksi atas usulan kemarin: peta sel LKE Cowork sempat saya sebut "wajib diambil". Setelah dicek versi template-nya, justru <b>tidak boleh</b> — peta untuk template yang sudah diganti lebih berbahaya daripada tanpa peta.</div>
+</section>
+
+<section>
+  <h2>4 · Desain A — perbaikan di FULL</h2>
+  <p>Yang disentuh: teks pengetahuan, satu baris prompt, satu skrip uji, satu skrip pembangkit indeks. <b>Tidak ada perubahan perilaku aplikasi</b> selain agen server yang berhenti menerima kutipan yang salah.</p>
+
+  <h3>A1 · Uji dulu, dan harus merah</h3>
+  <p><code>uji_kutipan_pola.py</code> diperluas (tetap satu skrip, tabel CLAUDE.md diperbarui):</p>
+  <ul>
+    <li><b>Cakupan</b>: seluruh <code>knowledge/**/*.{md,yaml,json}</code> ditambah <code>backend/app/prompts/*.md</code>, termasuk README. Yang dikecualikan hanya folder <code>_ARSIP*</code>, <code>_draft</code>, dan <code>wiki/konteks/regulasi/</code> (sumber kebenarannya sendiri).</li>
+    <li><b>Atribusi</b>: pasal dikaitkan ke regulasi <b>terdekat sebelumnya</b> dalam kalimat yang sama.</li>
+    <li><b>Peringatan yang sah</b> hanya dikenali dari penanda <b>eksplisit</b>: bagian <code>## Catatan verifikasi kutipan</code>, atau baris kutipan yang diawali <code>&gt; ⚠</code>. Tidak ada heuristik kata kunci.</li>
+    <li><b>Laporan tiga kelompok</b>: terbukti salah (merah) · belum terverifikasi (dihitung, tidak merah) · regulasi tanpa teks lokal (dihitung).</li>
+  </ul>
+  <div class="callout">Pembuktian merahnya alami: dijalankan pada FULL hari ini, uji itu <b>harus</b> menunjuk ke-16 sebutan di §2.1. Bila tidak, ujinya yang salah, bukan pengetahuannya.</div>
+
+  <h3>A2 · Betulkan delapan baris non-README</h3>
+  <p>Arah perbaikannya sama dengan pola RP-08 yang sudah dibetulkan: kriteria menunjuk <b>Pasal 26 ayat (1)</b> ("HPS dihitung secara keahlian dan menggunakan data yang dapat dipertanggungjawabkan"), sedangkan "minimal dua sumber harga" disebut sebagai praktik penyusunan HPS — Perlem LKPP 12/2021, lampiran, belum terverifikasi. Berlaku untuk dua SKILL.md, prompt <code>anggota_tim.md:249</code>, template PKP, dan kriteria CACM. Dua berkas konteks: "Permenkominfo" → "Pedoman Menkominfo". Rujukan graduasi: ditandai belum terverifikasi.</p>
+
+  <h3>A3 · README indeks pola dibangkitkan, bukan disunting</h3>
+  <p>Delapan README itu salah karena disunting terpisah dari polanya. Perbaikan yang tidak bisa kembali salah: skrip <code>backend/scripts/bangkitkan_indeks_pola.py</code> menulis ulang tabel indeks dari frontmatter tiap pola (<code>id · judul · kategori · severity · kriteria_baku</code>). Uji A1 memeriksa bahwa README sama dengan hasil pembangkit — README yang disunting tangan dan menyimpang akan merah.</p>
+
+  <h3>A4 · Yang tidak dikerjakan di v2</h3>
+  <p>Verifikasi sekitar 30 pasal Perpres 16/2018 dan regulasi keuangan (§2.3). Ini lanjutan 10.B.1 yang butuh teks resmi. Setelah A1, ukurannya selalu tercetak di keluaran uji.</p>
+</section>
+
+<section>
+  <h2>5 · Desain B — plugin v2 (folder <code>integral-mesin</code>)</h2>
+
+  <h3>B0 · Tata letak folder penugasan mengikuti garis keturunan</h3>
+  <p>Skrip v6 dan pengaman isolasi bekerja pada tata letak yang sama sejak Cowork v4. Plugin v1 memakai tata letak sendiri (<code>01-objek/</code>, <code>90-keluaran/</code>), yang berarti skrip harus diubah. v2 memakai tata letak leluhurnya, sehingga skrip dipakai <b>apa adanya</b>:</p>
+<pre><code>&lt;penugasan&gt;/
+├── 00-input/                  SEMUA masukan — di-hash oleh manifest; satu-satunya sumber FAKTA
+│   ├── (Surat Tugas, sasaran, entri PKPT)
+│   ├── objek/                 dokumen yang diperiksa
+│   ├── kriteria/              regulasi/SOP tambahan dari auditor
+│   └── bukti-lapangan/        hasil pemeriksaan fisik, notulen (bila ada, wajib dianalisis)
+├── _SESSION-MANIFEST.json     daftar + SHA-256 berkas 00-input/ (dibuat di awal)
+├── context.md                 identitas penugasan, tujuan, ruang lingkup, tim
+├── _PERENCANAAN/              DPP.md/.docx · Laporan-PIA.md/.docx
+├── _PKP/sasaran-assignment.json
+├── _KKP/temuan.json           ← SUMBER KEBENARAN semua keluaran
+├── _KKP/KKP-*.docx            (render_kkp.py)
+├── _LHP/rekomendasi.json · _LHP/LHP-*.docx   (render_lhp.py)
+├── _QA-SAIPI/                 hasil qc_saipi.py
+└── Paket-Analisis.md          ringkasan untuk auditor, dibangkitkan dari temuan.json</code></pre>
+  <p class="note">Akibatnya panduan auditor berubah: semua masukan masuk ke <code>00-input/</code> (boleh bersubfolder). Ini keputusan yang saya mintakan di §8.</p>
+
+  <h3>B1 · Isolasi Sumber (dari Cowork v4.3, disesuaikan)</h3>
+  <table>
+    <tr><th>Lapis</th><th>Wujud di plugin v2</th></tr>
+    <tr><td>1 · Aturan</td><td><code>references/05-isolasi-sumber.md</code> di skill payung — diadaptasi dari <code>ATURAN-ISOLASI-SUMBER.md</code>: <b>fakta hanya dari <code>00-input/</code></b>; wiki dan pola hanya untuk metodologi dan kriteria, bukan data; penanganan kriteria diselaraskan ke <code>wiki/konteks/regulasi/</code></td></tr>
+    <tr><td>2 · Empat cek per temuan</td><td>sebelum tiap kalimat Kondisi/Sebab/Akibat: sumber fakta · atribusi dokumen · isolasi sesi · bukan asumsi</td></tr>
+    <tr><td>3 · Manifest</td><td><code>scripts/generate_session_manifest.py</code> dijalankan di langkah pertama; mencatat SHA-256 tiap berkas <code>00-input/</code></td></tr>
+    <tr><td>4 · Whitelist wiki</td><td>ditegaskan di aturan: pola temuan = bentuk, bukan fakta</td></tr>
+    <tr><td>5 · Cek pra-terbit</td><td><code>scripts/check_isolation.py</code> sebelum KKP/LHP dirender: exit 2 bila <code>00-input/</code> berubah tanpa manifest baru; exit 3 bila ada <code>dokumen_sumber</code> di luar manifest → <b>render dihentikan</b></td></tr>
+  </table>
+
+  <h3>B2 · <code>temuan.json</code> sebagai sumber kebenaran</h3>
+  <p>Skill payung tidak lagi menulis KKP/LHP langsung. Ia menulis <code>_KKP/temuan.json</code> dengan bentuk yang sama seperti <code>append_temuan</code> INTEGRAL — termasuk kunci <code>sebab</code> yang wajib ada (boleh "Tidak cukup data…", tidak boleh hilang), <code>kode_kondisi/penyebab/rekomendasi</code>, <code>dokumen_sumber[{file, halaman, kutipan}]</code>, <code>langkah_kerja_terkait</code>, <code>pattern_id</code>, <code>origin</code>. Lalu <code>validate_kkp_json.py</code> memeriksanya. Semua dokumen dibangkitkan dari satu berkas itu, sehingga KKP, LHP, dan Paket tidak bisa saling berbeda isi.</p>
+
+  <h3>B3 · Perender dan QC dari INTEGRAL v6</h3>
+  <ul>
+    <li><code>render_kkp.py</code> dan <code>render_lhp.py</code> disalin dari <code>backend/v6/scripts</code>. Satu penyesuaian: lokasi <code>templates/</code> relatif ke akar plugin. Perender LHP adalah bagian terbesar (3.205 baris) dan paling berisiko — ia wajib diuji terhadap <b>ke-18 kerangka</b>, bukan satu contoh.</li>
+    <li><code>qc_saipi.py</code> + <code>audit_trail.py</code>: jalur checklist dipindah ke <code>meta/kepatuhan-saipi/</code>, dan aturan REN-* yang masih mencari KP dipetakan ke DPP/PIA — atau ditandai tidak berlaku, dengan alasan tertulis.</li>
+    <li><code>Paket-Analisis.md</code> dibangkitkan skrip kecil baru dari <code>temuan.json</code>, bukan ditulis bebas.</li>
+    <li>DPP/PIA ke <code>.docx</code>: bila <code>perencanaan_docx.py</code> INTEGRAL ternyata mandiri, ikut disalin; bila bergantung pada backend, tetap lewat skill docx. Ditentukan saat implementasi.</li>
+  </ul>
+
+  <h3>B4 · Lingkungan Cowork</h3>
+  <p>Skrip butuh <code>python-docx</code> dan <code>openpyxl</code>. Langkah pertama skill payung memeriksa keduanya, lalu melaporkan hasilnya. Bila tidak tersedia, ia mencoba memasang di sandbox; bila gagal, kembali ke skill docx dengan catatan "format tidak dijamin". Ini <b>belum terbukti</b> di Cowork Bapak — dan itu bagian pertama dari uji nyata.</p>
+
+  <h3>B5 · Uji di <code>bangun.py</code> — paket gagal tidak dibungkus</h3>
+  <table>
+    <tr><th>Uji</th><th>Bukti bisa merah</th></tr>
+    <tr><td>Uji kutipan (A1) dijalankan pada <b>isi paket</b></td><td>paket yang dibangun dari FULL hari ini harus merah (16 sebutan)</td></tr>
+    <tr><td>Semua skrip lolos <code>py_compile</code> dan <code>--help</code></td><td>—</td></tr>
+    <tr><td>Penugasan contoh (fixture) ujung ke ujung: manifest → <code>temuan.json</code> → validasi → isolasi → KKP → LHP → QC → Paket</td><td>—</td></tr>
+    <tr><td>LHP dirender untuk <b>18 kerangka</b>; tak ada <code>{{…}}</code> tersisa selain yang sengaja <code>[DIISI AUDITOR]</code></td><td>kerangka tanpa perender yang cocok → merah</td></tr>
+    <tr><td>Fixture tercemar: <code>dokumen_sumber</code> menunjuk berkas di luar manifest</td><td><code>check_isolation</code> harus exit 3</td></tr>
+    <tr><td>Fixture diubah: satu berkas <code>00-input/</code> disunting setelah manifest</td><td>harus exit 2</td></tr>
+    <tr><td>Fixture tanpa kunci <code>sebab</code></td><td>validasi harus gagal</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>6 · Desain C — repo Cowork</h2>
+  <p>Repo <code>marchelianaba/audit-system-cowork</code> diperlakukan sebagai <b>arsip leluhur</b>: tidak dirawat paralel. Perangkat khasnya yang masih berguna pindah ke <code>integral-mesin</code> (dengan catatan asal di tiap berkas), sedangkan kutipan salah di dalamnya ("Perka BPKP" 22 berkas, "Permenkominfo" 15, dan lainnya) tidak dibetulkan di sana. Repo itu milik akun lain, jadi saya tidak mengubahnya — cukup Bapak sampaikan ke pemiliknya bahwa sumber yang hidup sekarang adalah INTEGRAL + <code>integral-mesin</code>.</p>
+</section>
+
+<section>
+  <h2>7 · Urutan kerja</h2>
+  <table>
+    <tr><th>Langkah</th><th>Di mana</th><th>Selesai bila</th><th>Perkiraan</th></tr>
+    <tr><td>1 · Perluas uji kutipan (A1)</td><td>FULL</td><td>merah tepat di 16 sebutan §2.1</td><td>½ hari</td></tr>
+    <tr><td>2 · Betulkan teks + prompt (A2) dan bangkitkan README (A3)</td><td>FULL</td><td>uji hijau; README = hasil pembangkit</td><td>½ hari</td></tr>
+    <tr><td>3 · Plugin v2: tata letak B0, isolasi B1, <code>temuan.json</code> B2, perender/QC B3, uji B5</td><td><code>integral-mesin</code></td><td>semua uji B5 hijau, termasuk tiga bukti merah</td><td>1–1½ hari (terbesar: <code>render_lhp</code> × 18 kerangka)</td></tr>
+    <tr><td>4 · Uji nyata di Cowork Bapak (B4)</td><td>laptop Bapak</td><td>satu penugasan nyata sampai Paket + daftar periksa; pustaka Python tersedia atau jalur cadangan jalan</td><td>—</td></tr>
+    <tr><td>5 · Bangun ulang &amp; bandingkan dengan v1 pada penugasan yang sama</td><td><code>integral-mesin</code></td><td>selisihnya dijelaskan</td><td>½ hari</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>8 · Keputusan yang dibutuhkan dari Bapak</h2>
+  <ol class="steps">
+    <li><b>Izin untuk A di FULL</b> — teks pengetahuan, satu baris prompt <code>anggota_tim.md</code>, perluasan <code>uji_kutipan_pola.py</code>, dan skrip baru <code>bangkitkan_indeks_pola.py</code>. Tidak ada perubahan kode aplikasi.</li>
+    <li><b>Tata letak folder penugasan v2</b> (B0) — semua masukan masuk <code>00-input/</code>, keluaran di <code>_KKP/_LHP/_PERENCANAAN</code>. Panduan auditor ikut berubah.</li>
+    <li><b>Repo Cowork</b> — disampaikan ke pemiliknya sebagai arsip, bukan dirawat.</li>
+  </ol>
+  <div class="callout ok"><b>Yang tidak berubah dari v1:</b> FULL tetap hulu; plugin dibangun dari <code>knowledge/</code> oleh <code>bangun.py</code>; paket yang gagal uji tidak dibungkus; semua keluaran berlabel DRAF dan diunggah manual ke INTEGRAL FREE; distribusi lewat berkas <code>.plugin</code>.</div>
+</section>
+
+<footer>INTEGRAL Mesin · Inspektorat II Komdigi · lanjutan dari <code>docs/ARSITEKTUR-COWORK-MESIN.html</code> (repo FULL) · cek FULL 29 Sep 2026: 303 berkas, 20 kunci regulasi terverifikasi</footer>
+</div>
+</body>
+</html>
