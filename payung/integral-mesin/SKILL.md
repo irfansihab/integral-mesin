@@ -48,6 +48,11 @@ in Chrome tersedia, atau LKE Excel — skill itu yang memilih) · RB → `evalua
 MR → `evaluasi-manajemen-risiko` · LK/PIPK/PNBP → `reviu-laporan-keuangan`/`reviu-pipk`/`reviu-pnbp` ·
 TLHP → `pemantauan-tindak-lanjut` · kriteria dari auditor tanpa skill khusus → `audit-umum`/
 `reviu-umum`/`evaluasi-umum`/`pemantauan-umum`/`konsultansi-umum`. **Tidak jelas → tanyakan.**
+**Skill jenis ditulis untuk server INTEGRAL.** Bila ia menyebut *digest* TOR/RAB/dokumen, `read_digest`,
+`read_ingested_digest`, atau melarang membaca PDF ulang — di Cowork tak ada digest: **baca dokumen
+di `00-input/` langsung**, halaman demi halaman, dan catat halamannya untuk kutipan. Alat tulisnya
+diganti berkas: `append_temuan` → `_KKP/temuan.json`, `write_penilaian_aspek` →
+`_KKP/penilaian-aspek.json`, `write_perencanaan` → `_PERENCANAAN/dpp.json`/`pia.json`.
 Lalu baca doktrin bersama yang dirujuknya: `skills/panduan-format-umum/PANDUAN.md`,
 `kodefikasi-temuan.md`, dan `shared-pbj-references/` atau `shared-kinerja-references/` bila disebut.
 
@@ -73,11 +78,14 @@ SESUAI/TIDAK_SESUAI/TIDAK_CUKUP_DATA · kondisi kronologis, bahasa formal baku.
 Format tiap berkas ada di `references/04-kontrak-berkas.md`; alur rinci di `references/02-alur-keluaran.md`.
 
 1. **`context.md`** — identitas, Tujuan, Ruang Lingkup, tabel Tim (format wajib di rujukan 04).
-2. **DPP** → `_PERENCANAAN/DPP.md` dari `wiki/templates/dpp/dpp-default.md`, dan sasarannya ke
-   `_PKP/sasaran-assignment.json`. **Berhenti — minta auditor membaca DPP** sebelum lanjut.
-3. **Laporan PIA** → `_PERENCANAAN/Laporan-PIA.md` (9 bagian; §6 empat kriteria kelayakan — bila
-   tak layak, hentikan). Lalu `mesin.py perencanaan <folder>` → `.docx`.
-4. **Analisis** → `_KKP/temuan.json` (+ `_KKP/penilaian-aspek.json` untuk penutupan checklist).
+2. **DPP** → `_PERENCANAAN/dpp.json` (daftar field: `mesin.py perencanaan --field dpp`; tabel berupa
+   daftar objek) dan sasarannya ke `_PKP/sasaran-assignment.json`. Field yang merupakan keputusan
+   auditor dibiarkan kosong — mesin mencetaknya `[BELUM DIISI]`. **Berhenti — minta auditor membaca
+   DPP** sebelum lanjut.
+3. **Laporan PIA** → `_PERENCANAAN/pia.json` (`--field pia`; §6 empat kriteria kelayakan — bila tak
+   layak, hentikan). Lalu `mesin.py perencanaan <folder>` → `DPP.md`/`Laporan-PIA.md` + `.docx`.
+4. **Analisis** → `_KKP/temuan.json` + `_KKP/penilaian-aspek.json` — **tiap** butir checklist
+   ditutup, termasuk yang SESUAI (wajib untuk KKSA; kunci `aspek`/`kesimpulan`/`dasar`).
    Lalu `mesin.py kkp <folder>`: kontrak → isolasi → KKP → QC. Keluar 5/2/3 → perbaiki sumbernya.
 5. **LHP awal** → tulis data profilnya (KKSA: `_LHP/rekomendasi.json`; memo: `_LHP/saran.json`;
    RB: `_LHP/penilaian-rb.json`; pendampingan: `_LHP/kegiatan-pendampingan.json`), lalu

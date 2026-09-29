@@ -75,11 +75,24 @@ konsultansi tanpa Sebab · `dokumen_sumber` tak kosong, tiap butir punya `file`,
 `kutipan` · `file` harus berkas di manifest (dicek `check_isolation`) · `kode_kondisi` terisi ·
 tak ada `{{…}}`.
 
-## `_KKP/penilaian-aspek.json` (dianjurkan)
+## `_KKP/penilaian-aspek.json` (wajib untuk jenis ber-KKSA)
+
+Penutupan **tiap** butir checklist skill — termasuk yang SESUAI — supaya cakupan penilaian
+terlihat, bukan hanya daftar temuan. Dicetak di KKP sebagai tabel "Kesimpulan Penilaian per
+Aspek". Kuncinya **persis** `aspek`, `kesimpulan`, `dasar` (sama dengan `write_penilaian_aspek`
+server); kunci lain membuat kolomnya tercetak kosong, jadi `mesin.py kkp` menolaknya.
 
 ```json
-{"aspek": [{"butir": "Kelengkapan KAK/TOR", "status": "TIDAK_SESUAI", "dasar": "00-input/TOR.pdf hal. 2"}]}
+{"aspek": [
+  {"aspek": "Pasal 61 ayat (2) huruf d — kelengkapan dokumen pendukung", "kesimpulan": "TIDAK_SESUAI",
+   "dasar": "TOR tidak memuat 5 dari 7 blok IR2 (T-001); 00-input/TOR.pdf hal. 1–2"},
+  {"aspek": "Pasal 61 ayat (2) huruf c — penandaan anggaran", "kesimpulan": "TIDAK_CUKUP_DATA",
+   "dasar": "TOR/RAB tidak memuat penandaan; RKA Satker tidak diserahkan"}]}
 ```
+
+`kesimpulan` ∈ SESUAI · TIDAK_SESUAI · TIDAK_CUKUP_DATA. Butir TIDAK_SESUAI dirinci jadi temuan;
+bila ada temuan, sekurang-kurangnya satu butir harus TIDAK_SESUAI. Tidak berlaku untuk evaluasi
+ber-LKE (SAKIP/SPIP/RB punya rekap nilai sendiri) dan konsultansi.
 
 ## Data LHP per profil
 

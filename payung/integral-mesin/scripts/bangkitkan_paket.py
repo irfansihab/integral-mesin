@@ -74,7 +74,7 @@ def main() -> int:
         L += ["| Butir | Status | Dasar |", "|---|---|---|"]
         try:
             for b in json.loads(pa.read_text(encoding="utf-8")).get("aspek", []):
-                L.append(f"| {b.get('butir', b.get('aspek', ''))} | {b.get('status', '')} | {b.get('dasar', '')} |")
+                L.append(f"| {b.get('aspek', '')} | {b.get('kesimpulan', '')} | {b.get('dasar', '')} |")
         except (json.JSONDecodeError, AttributeError):
             L.append("| _penilaian-aspek.json rusak_ | | |")
     else:

@@ -97,6 +97,11 @@ Ruang Lingkup: Dokumen objek uji TA 2026.
         "penugasan": {"id": f"UJI-{jenis}", "nomor_st": "ST-UJI/2026", "tanggal_st": "2026-10-01",
                       "obyek": f"Objek Uji {jenis}", "jenis_pengawasan": jenis},
         "temuan": temuan}, ensure_ascii=False, indent=2), encoding="utf-8")
+    if not tanpa:
+        (d / "_KKP" / "penilaian-aspek.json").write_text(json.dumps({"aspek": [
+            {"aspek": "Kewajaran nilai terhadap rincian perhitungan", "kesimpulan": "TIDAK_SESUAI", "dasar": "T-001, T-002; Dokumen-Objek hal. 1"},
+            {"aspek": "Kelengkapan jadwal", "kesimpulan": "SESUAI", "dasar": "Dokumen-Objek hal. 3 memuat jadwal"}]},
+            ensure_ascii=False), encoding="utf-8")
     (d / "_LHP" / "saran.json").write_text(json.dumps([{"pertanyaan": "Bolehkah paket dipecah?", "telaah": "Pemecahan paket untuk menghindari tender dilarang.", "dasar_hukum": [
         "Perpres 16/2018 Pasal 20 ayat (2) huruf d"], "pendapat": "Tidak boleh untuk menghindari tender.",
         "saran": "Satukan paket."}], ensure_ascii=False), encoding="utf-8")
@@ -108,6 +113,16 @@ Ruang Lingkup: Dokumen objek uji TA 2026.
     (d / "_LHP" / "rekomendasi.json").write_text(json.dumps({"T-001": "Kepala satker agar menetapkan SOP penyusunan HPS.",
                                                              "T-002": "PPK agar melengkapi rincian perhitungan HPS."},
                                                             ensure_ascii=False), encoding="utf-8")
+
+
+def kolom_aspek_kosong(docx: Path) -> bool | None:
+    """True bila tabel 'Kesimpulan Penilaian per Aspek' ada tetapi kolom Aspek/Kesimpulan kosong.
+    None bila tabelnya tak ada. Kunci salah TIDAK galat di render_kkp — hanya sel kosong."""
+    from docx import Document
+    for tb in Document(str(docx)).tables:
+        if len(tb.columns) == 4 and "Aspek" in tb.rows[0].cells[1].text:
+            return any(not r.cells[1].text.strip() or not r.cells[2].text.strip() for r in tb.rows[1:])
+    return None
 
 
 def sisa_placeholder(docx: Path) -> list[str]:
@@ -153,10 +168,12 @@ def main() -> int:
             paket = (d / "Paket-Analisis.md").read_text(encoding="utf-8") if (d / "Paket-Analisis.md").exists() else ""
             qc = [n for n, r, _ in langkah if r == 7]
             isian = sorted({x for _, _, o in langkah for x in re.findall(r"· (\[DIISI[^\]\n]*\])", o)})
-            ok = not gagal_l and kkp and lhp and not sisa and "T-001" in paket and "DRAF" in paket
+            aspek_kosong = [k.name for k in kkp if j not in TANPA_SEBAB and kolom_aspek_kosong(k) is not False]
+            ok = not gagal_l and kkp and lhp and not sisa and not aspek_kosong and "T-001" in paket and "DRAF" in paket
             rinci = []
             if gagal_l: rinci.append("keluar " + ", ".join(gagal_l))
             if not kkp: rinci.append("KKP tak ada")
+            if aspek_kosong: rinci.append(f"tabel penilaian aspek tak ada/kosong di {aspek_kosong}")
             if sisa: rinci.append(f"placeholder tersisa {sisa[:6]}")
             if qc: rinci.append(f"QC KRITIS di {'/'.join(qc)}")
             if isian: rinci.append(f"{len(isian)} bagian LHP perlu diisi")
@@ -189,6 +206,17 @@ def main() -> int:
         t = json.loads((d / "_KKP" / "temuan.json").read_text(encoding="utf-8")); t.pop("schema_version")
         (d / "_KKP" / "temuan.json").write_text(json.dumps(t), encoding="utf-8")
         r, _ = mesin(akar, "kkp", str(d)); cek("temuan.json tanpa schema_version → kkp keluar 5", r == 5, f"keluar {r}")
+        d = kerja / "merah-kunci-aspek"; susun(d, "reviu-rka-kl"); mesin(akar, "mulai", str(d))
+        (d / "_KKP" / "penilaian-aspek.json").write_text(json.dumps({"aspek": [
+            {"butir": "Kelengkapan TOR", "status": "TIDAK_SESUAI", "dasar": "T-001"}]}), encoding="utf-8")
+        r, _ = mesin(akar, "kkp", str(d)); cek("penilaian-aspek berkunci butir/status → kkp keluar 5", r == 5, f"keluar {r}")
+        d = kerja / "merah-aspek-sesuai"; susun(d, "audit-umum"); mesin(akar, "mulai", str(d))
+        (d / "_KKP" / "penilaian-aspek.json").write_text(json.dumps({"aspek": [
+            {"aspek": "Semua butir", "kesimpulan": "SESUAI", "dasar": "x"}]}), encoding="utf-8")
+        r, _ = mesin(akar, "kkp", str(d)); cek("ada temuan tetapi semua aspek SESUAI → kkp keluar 5", r == 5, f"keluar {r}")
+        d = kerja / "merah-tanpa-aspek"; susun(d, "reviu-pengadaan"); mesin(akar, "mulai", str(d))
+        (d / "_KKP" / "penilaian-aspek.json").unlink()
+        r, _ = mesin(akar, "kkp", str(d)); cek("jenis KKSA tanpa penilaian-aspek.json → kkp keluar 5", r == 5, f"keluar {r}")
         d = kerja / "merah-kosong"; (d / "00-input").mkdir(parents=True)
         r, _ = mesin(akar, "mulai", str(d)); cek("00-input kosong → mulai keluar 4", r == 4, f"keluar {r}")
     finally:

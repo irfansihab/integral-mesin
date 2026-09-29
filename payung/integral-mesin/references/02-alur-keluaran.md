@@ -12,7 +12,7 @@ Auditor hanya menyiapkan `00-input/`. Sisanya dibuat skill dan `mesin.py`:
 ├── _PERENCANAAN/             skill: DPP.md, Laporan-PIA.md → mesin.py perencanaan: .docx
 ├── _PKP/sasaran-assignment.json   skill — sasaran dari DPP
 ├── _KKP/temuan.json          skill — SUMBER KEBENARAN; mesin.py kkp: KKP-<nama>.docx
-├── _KKP/penilaian-aspek.json skill — penutupan butir checklist (opsional tetapi dianjurkan)
+├── _KKP/penilaian-aspek.json skill — penutupan tiap butir checklist (wajib untuk KKSA)
 ├── _LHP/                     skill: rekomendasi.json | saran.json | penilaian-rb.json |
 │                             kegiatan-pendampingan.json → mesin.py lhp: LHA/LHR/LHE/LP/LHP-*.docx
 ├── _QA-SAIPI/                mesin.py — hasil QC SAIPI tahap kkp & lhp

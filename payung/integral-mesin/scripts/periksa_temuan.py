@@ -11,6 +11,9 @@ Doktrin yang ditegakkan di sini — di server ia ditegakkan kode, di Cowork hany
   · evaluasi ber-LKE & konsultansi tidak memakai Sebab (diperingatkan bila diisi)
   · sasaran_id harus ada di `_PKP/sasaran-assignment.json`
   · tak ada placeholder `{{…}}` di isi temuan
+  · jenis ber-KKSA WAJIB punya `_KKP/penilaian-aspek.json` berkunci persis seperti
+    `write_penilaian_aspek` server — {aspek, kesimpulan, dasar}. Kunci lain tak galat di
+    perender; kolomnya tercetak KOSONG tanpa pesan (terjadi 29 Sep 2026: butir/status).
 
 Keluar 0 bila sah, 5 bila ada pelanggaran (dicetak semua, bukan berhenti di yang pertama).
 """
@@ -26,6 +29,44 @@ TANPA_SEBAB = {"evaluasi-sakip", "evaluasi-spip", "evaluasi-reformasi-birokrasi"
 PROFIL_KHUSUS = {"konsultansi-umum", "konsultasi-pengadaan", "evaluasi-reformasi-birokrasi"}
 TIDAK_TERBUKTI = re.compile(r"tidak (cukup data|ditemukan penyebab)", re.I)
 ASAL = {"AI", "AI_DARI_CATATAN", "MANUAL"}
+KESIMPULAN = {"SESUAI", "TIDAK_SESUAI", "TIDAK_CUKUP_DATA"}
+
+
+def periksa_aspek(d: Path, jenis: str, ada_temuan: bool) -> list[str]:
+    """`_KKP/penilaian-aspek.json` — penutupan tiap butir checklist, termasuk yang SESUAI.
+
+    Dibaca render_kkp.py (tabel "Kesimpulan Penilaian per Aspek") dengan kunci
+    aspek/kesimpulan/dasar. Evaluasi ber-LKE punya rekap sendiri; konsultansi tak berchecklist.
+    """
+    f = d / "_KKP" / "penilaian-aspek.json"
+    if jenis in TANPA_SEBAB:
+        return []
+    if not f.exists():
+        return ["_KKP/penilaian-aspek.json tidak ada — tutup TIAP butir checklist skill "
+                "(SESUAI/TIDAK_SESUAI/TIDAK_CUKUP_DATA + dasar), bukan hanya yang jadi temuan"]
+    try:
+        aspek = json.loads(f.read_text(encoding="utf-8")).get("aspek")
+    except (json.JSONDecodeError, AttributeError) as e:
+        return [f"_KKP/penilaian-aspek.json rusak: {e}"]
+    if not isinstance(aspek, list) or not aspek:
+        return ["penilaian-aspek.json: 'aspek' harus daftar yang tidak kosong"]
+    salah = []
+    for i, a in enumerate(aspek, 1):
+        if not isinstance(a, dict):
+            salah.append(f"penilaian-aspek #{i}: harus objek {{aspek, kesimpulan, dasar}}")
+            continue
+        asing = sorted(set(a) - {"aspek", "kesimpulan", "dasar"})
+        if asing:
+            salah.append(f"penilaian-aspek #{i}: kunci {asing} tak dibaca perender — pakai aspek/kesimpulan/dasar")
+        if not str(a.get("aspek") or "").strip():
+            salah.append(f"penilaian-aspek #{i}: 'aspek' kosong")
+        if a.get("kesimpulan") not in KESIMPULAN:
+            salah.append(f"penilaian-aspek #{i}: kesimpulan {a.get('kesimpulan')!r} bukan {sorted(KESIMPULAN)}")
+        if not str(a.get("dasar") or "").strip():
+            salah.append(f"penilaian-aspek #{i}: 'dasar' kosong — satu kalimat bukti dari dokumen")
+    if ada_temuan and not any(isinstance(a, dict) and a.get("kesimpulan") == "TIDAK_SESUAI" for a in aspek):
+        salah.append("ada temuan, tetapi tak satu pun butir penilaian-aspek TIDAK_SESUAI — keduanya bertentangan")
+    return salah
 
 
 def periksa(d: Path, jenis_sah: set[str] | None = None) -> tuple[list[str], list[str]]:
@@ -102,6 +143,7 @@ def periksa(d: Path, jenis_sah: set[str] | None = None) -> tuple[list[str], list
         for k, v in t.items():
             if isinstance(v, str) and "{{" in v:
                 salah.append(f"{tid}: '{k}' memuat placeholder {{{{…}}}}")
+    salah += periksa_aspek(d, jenis, bool(data["temuan"]))
     return salah, catatan
 
 
@@ -115,7 +157,7 @@ def main() -> int:
     for c in catatan:
         print(f"  · {c}")
     if salah:
-        print(f"✗ temuan.json melanggar kontrak — {len(salah)} hal:")
+        print(f"✗ kontrak berkas _KKP dilanggar (temuan.json · penilaian-aspek.json) — {len(salah)} hal:")
         for s in salah:
             print(f"  ✗ {s}")
         return 5
