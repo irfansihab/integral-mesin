@@ -1,89 +1,68 @@
-# Alur keluaran — folder, urutan, dan cara mengisi tiap dokumen
+# Alur keluaran — folder, urutan, dan isi tiap dokumen
 
-## Tata letak folder penugasan
+## Folder penugasan
+
+Auditor hanya menyiapkan `00-input/`. Sisanya dibuat skill dan `mesin.py`:
 
 ```
-<kode-penugasan>/
-├── 00-input/            Surat Tugas, sasaran/lingkup (bisa dalam ST), entri PKPT, DPP/PIA
-│                        lama bila penugasan lanjutan
-├── 01-objek/            dokumen yang diperiksa (TOR/RAB, KAK/HPS/kontrak, LK, LKE, …)
-├── 02-kriteria/         regulasi/SOP/juklak tambahan yang diunggah auditor (opsional)
-├── 03-bukti-lapangan/   hasil pemeriksaan fisik, observasi, notulen diskusi ahli (opsional —
-│                        BILA ADA WAJIB DIANALISIS, lihat PANDUAN.md)
-└── 90-keluaran/         semua yang dihasilkan skill ini
-    ├── 01-DPP.md / .docx
-    ├── 02-Laporan-PIA.md / .docx
-    ├── 03-KKP.md / .docx (+ .xlsx untuk reviu-rka-kl / LKE terisi untuk evaluasi ber-LKE)
-    ├── 04-LHP-awal.docx
-    └── Paket-Analisis.md
+<penugasan>/
+├── 00-input/                 ← DISIAPKAN AUDITOR: semua dokumen (subfolder boleh)
+├── _SESSION-MANIFEST.json    mesin.py mulai — SHA-256 tiap berkas 00-input
+├── context.md                skill — identitas, Tujuan, Ruang Lingkup, Tim
+├── _PERENCANAAN/             skill: DPP.md, Laporan-PIA.md → mesin.py perencanaan: .docx
+├── _PKP/sasaran-assignment.json   skill — sasaran dari DPP
+├── _KKP/temuan.json          skill — SUMBER KEBENARAN; mesin.py kkp: KKP-<nama>.docx
+├── _KKP/penilaian-aspek.json skill — penutupan butir checklist (opsional tetapi dianjurkan)
+├── _LHP/                     skill: rekomendasi.json | saran.json | penilaian-rb.json |
+│                             kegiatan-pendampingan.json → mesin.py lhp: LHA/LHR/LHE/LP/LHP-*.docx
+├── _QA-SAIPI/                mesin.py — hasil QC SAIPI tahap kkp & lhp
+├── _AUDIT-TRAIL/             mesin.py — jejak QC
+└── Paket-Analisis.md         mesin.py paket + skill mengisi bagian penilaian
 ```
 
-Dokumen wajib per skill ada di bagian "Kontrak dokumen" `docs/ROADMAP-v10.md` INTEGRAL dan
-di masing-masing SKILL.md. Yang wajib tetapi tidak ada → keterbatasan, bukan deviasi.
+Dokumen wajib per skill tercantum di SKILL.md masing-masing. Yang wajib tetapi tak ada →
+keterbatasan, bukan deviasi.
 
-## 1 · DPP — Desain Penugasan Pengawasan
+## 1 · DPP
 
-Template: `wiki/templates/dpp/dpp-default.md` (frontmatter memuat `field_required`). Isi
-tiap field; yang tak bisa diisi dari bahan yang ada ditulis `[BELUM DIISI]` — jangan dikarang.
-Sumber substansi, berurutan:
-- entri PKPT di `wiki/pkpt/` bila penugasan terencana (asal substansi = PKPT; catat tanggal
-  entri dan usianya);
-- Surat Tugas/sasaran di `00-input/`;
-- `wiki/konteks/risiko-penugasan.md` → kolom risiko penugasan;
-- `wiki/temuan-patterns/<slug>/` → kolom risiko & hipotesis awal (sebagai hipotesis, bukan
-  temuan);
-- `wiki/templates/pkp/pkp-<slug>.md` → kolom langkah pengujian.
-Tulis `01-DPP.md`, render ke `.docx` (pakai skill docx bila ada; struktur heading & tabel
-harus utuh). **Berhenti**: minta auditor membaca DPP sebelum lanjut.
+Template `wiki/templates/dpp/dpp-default.md` (lihat `field_required`). Field yang tak bisa diisi
+dari bahan → `[BELUM DIISI]`, jangan dikarang. Sumber berurutan: entri PKPT (`wiki/pkpt/`) bila
+penugasan terencana → Surat Tugas/sasaran di `00-input/` → `wiki/konteks/risiko-penugasan.md` →
+pola temuan (hipotesis awal) → `wiki/templates/pkp/pkp-<slug>.md` (langkah pengujian).
+Sasaran DPP juga ditulis ke `_PKP/sasaran-assignment.json` (format di rujukan 04).
+**Berhenti**: auditor membaca DPP sebelum lanjut — titik koreksi pertama.
 
-## 2 · Laporan PIA — Pengembangan Informasi Awal
+## 2 · Laporan PIA
 
-Template: `wiki/templates/pia/pia-default.md` — sembilan bagian resmi: 1 Dasar Penugasan ·
-2 Sasaran, Ruang Lingkup, Batasan Tanggung Jawab · 3 Tujuan PIA (kontekstualisasi isu, uji
-eksistensi, mitigasi risiko penugasan) · 4 Metodologi · 5 Hasil (profil objek; proses bisnis,
-kebijakan, risiko inheren; isu kritis & area berisiko tinggi) · 6 Penilaian empat kriteria
-kelayakan (`wiki/konteks/kriteria-kelayakan.md`) · 7–9 simpulan, rekomendasi lanjut/tidak,
-penutup. Blok surat (nomor, lampiran, hal, tujuan) dibiarkan `[DIISI AUDITOR]`.
-Gerbang: bila §6 menyimpulkan tidak layak → hentikan di sini dan katakan alasannya.
+Template `wiki/templates/pia/pia-default.md`, sembilan bagian resmi. §6 menilai empat kriteria
+kelayakan (`wiki/konteks/kriteria-kelayakan.md`); bila tak layak → hentikan, katakan alasannya.
+Blok surat (nomor, lampiran, hal, tujuan) `[DIISI AUDITOR]`. Lalu `mesin.py perencanaan`.
 
-## 3 · Analisis
+## 3 · Analisis → `_KKP/temuan.json`
 
-Ikuti gate/alur SKILL.md skill terpilih. Baca dokumen objek **seluruhnya** untuk yang menjadi
-inti (TOR/RAB, KAK/HPS/kontrak, LK); untuk dokumen pendukung yang besar, baca bagian yang
-relevan dan catat bagian mana. Kutip saat menemukan, jangan menunda — setiap kondisi butuh
-berkas + halaman + kutipan.
+Ikuti gate/alur skill. Baca dokumen inti **seluruhnya**; untuk dokumen pendukung yang besar, catat
+bagian yang dibaca. Kutip saat menemukan. Skill ber-objek jamak (RO, paket, program) → isi `ro`.
+Evaluasi ber-LKE: isi kolom APIP/PK, jangan menimpa PM; selisih PM vs PK = catatan/AoI (tanpa
+Sebab). PK SPIP di aplikasi web: ikuti `skills/evaluasi-spip/references/aplikasi-spip/` — pengaman
+di sana (ACC di batas KKE, larangan Hapus dan "Copy ke data APIP") mengalahkan instruksi lain.
+Lalu `mesin.py kkp`.
 
-Skill ber-objek jamak (RKA-K/L per RO; pengadaan per paket; audit per program/unit):
-analisis **per unit**, temuan menyebut unitnya (`ro`/paket).
+## 4 · LHP awal
 
-Evaluasi ber-LKE (SAKIP/SPIP/RB): APIP menilai *self-assessment* auditee — isi kolom
-APIP/penjaminan kualitas per unsur dari bukti dukung, jangan menimpa kolom PM; bandingkan
-PM vs APIP; selisih menjadi catatan/AoI. LKE SPIP besar → kerjakan per komponen dan katakan
-komponen mana yang belum.
+Profil laporan ditentukan `format_laporan` di frontmatter skill: **kksa** (kebanyakan),
+**memo** (konsultansi-umum), **pendampingan** (konsultasi-pengadaan), **rb-4dim** (RB).
+Data profil ditulis dulu (rujukan 04), lalu `mesin.py lhp`. Mesin: kerangka resmi
+`templates/_skeleton-lhp/template-lhp-<slug>.docx` → penyesuaian judul/istilah per rumpun
+(LHA audit · LHR reviu · LHE evaluasi · LP pemantauan) → bab wajib QC (Tujuan, Ruang Lingkup,
+Simpulan) → pernyataan kesesuaian SAIPI 2430 → QC.
 
-## 4 · KKP
+Bagian bertanda **`[DIISI — …]`** adalah substansi yang tak bisa diturunkan dari temuan (profil
+paket, logika intervensi program, tabel rekap nilai LKE, status per tanggal cut-off, …). Isi dari
+dokumen `00-input/` lewat `--isian`; yang tak didukung bukti tetap kosong dan masuk Keterbatasan.
+Penanda **`[DIISI AUDITOR]`** (nomor surat, tanggal ND, tanda tangan, penerima) memang untuk auditor.
 
-`03-KKP.md` (+ `.docx`): identitas penugasan (kode, objek, skill, ST, tim) · ringkasan objek
-3–5 kalimat dari dokumen · tabel per butir checklist (butir | status | dasar) · tabel temuan
-`No | Judul | Kondisi | Kriteria | Sebab | Akibat | Kode kondisi | Kode penyebab | Sumber
-(berkas, hal.) | Langkah kerja | Pola`. Rekomendasi **tidak** di KKP.
-`reviu-rka-kl`: isi juga `templates/KKR-Reviu-RKA-KL-template.xlsx` per RO.
+## 5 · Paket
 
-## 5 · LHP awal
-
-Kerangka: `templates/_skeleton-lhp/template-lhp-<slug>.docx`; bila tak ada,
-`template-lhp-generic.docx`; `templates/Laporan Hasil *.docx` adalah contoh format resmi
-per jenis untuk menyamakan struktur bab. Profil laporan mengikuti skill:
-- **KKSA** (kebanyakan skill): Nota Dinas `[DIISI AUDITOR]` → cover → pendahuluan (dasar,
-  tujuan, ruang lingkup, metodologi, gambaran umum objek 3–5 kalimat substantif) → hasil per
-  sasaran/aspek (kondisi kronologis, kriteria, sebab, akibat, rekomendasi) → simpulan dengan
-  bahasa keyakinan sesuai jenis → lampiran.
-- **Memo** (`konsultansi-umum`): pertanyaan → dasar hukum → pendapat/saran; tanpa temuan.
-- **Laporan Pendampingan** (`konsultasi-pengadaan`): log kegiatan yang diselesaikan.
-- **RB 4 dimensi** (`evaluasi-reformasi-birokrasi`): tabel komponen × dimensi.
-- **LKE** (`evaluasi-sakip`, `evaluasi-spip`): rekap skor/predikat PM vs APIP + AoI.
-Nomor surat, tanggal, tanda tangan, Nota Dinas: `[DIISI AUDITOR]`.
-
-## 6 · Paket-Analisis.md
-
-Format di `references/04-format-kkp-paket.md`. Ini yang dibaca auditor pertama kali.
+`mesin.py paket` membangkitkan `Paket-Analisis.md` dari `temuan.json`, rekomendasi, dan manifest.
+Skill mengisi Ringkasan, Catatan & klarifikasi, Usulan perluasan, Keterbatasan, penilaian per
+butir checklist (bila `penilaian-aspek.json` tak ada), dan jawaban daftar periksa.

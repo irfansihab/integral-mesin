@@ -48,13 +48,12 @@
 
 <section>
   <h2>2 · Siapkan folder penugasan</h2>
-<pre>2026-09-reviu-rka-ditjen-x/
-├── 00-input/           Surat Tugas, sasaran/lingkup, entri PKPT (bila ada)
-├── 01-objek/           dokumen yang diperiksa — TOR/RAB, KAK/HPS/kontrak, LK, LKE, …
-├── 02-kriteria/        regulasi/SOP tambahan yang ingin dipakai sebagai kriteria (opsional)
-├── 03-bukti-lapangan/  hasil pemeriksaan fisik, notulen diskusi (opsional — bila ada, dianalisis)
-└── 90-keluaran/        (dibuat sendiri oleh skill)</pre>
-  <p>Dokumen yang <b>wajib</b> per jenis pengawasan tercantum di masing-masing skill; yang tidak ada akan dicatat sebagai keterbatasan, bukan dikarang.</p>
+<pre>2026-10-reviu-rka-ditjen-x/
+└── 00-input/     SEMUA dokumen: Surat Tugas, sasaran, dokumen yang diperiksa (TOR/RAB,
+                  KAK/HPS/kontrak, LK, LKE, …), regulasi/SOP tambahan, bukti lapangan.
+                  Subfolder boleh, tidak wajib.</pre>
+  <p><b>Cukup satu folder itu.</b> Semua yang lain — konteks, DPP, PIA, KKP, LHP, hasil QC, Paket — dibuat skill. Dokumen yang <b>wajib</b> per jenis pengawasan tercantum di masing-masing skill; yang tidak ada dicatat sebagai keterbatasan, bukan dikarang.</p>
+  <div class="c warn"><b>Setelah dimulai, isi <code>00-input/</code> dikunci sidik jarinya.</b> Bila Bapak/Ibu menambah atau mengganti dokumen, beri tahu skill — ia membuat ulang manifest dan memeriksa ulang temuan yang terdampak. Perubahan diam-diam akan ditolak saat KKP/LHP dibuat.</div>
 </section>
 
 <section>
@@ -62,15 +61,16 @@
   <ol>
     <li>Buka folder penugasan di Cowork, lalu tulis: <b>"kerjakan penugasan ini"</b>.</li>
     <li>Skill menentukan jenis pengawasan dari Surat Tugas. Bila ragu, ia <b>bertanya</b> — jawab, jangan biarkan menebak.</li>
-    <li>Ia menyusun <b>DPP</b> dulu dan <b>berhenti</b>. Baca DPP-nya: sasaran, lingkup, risiko, hipotesis. Koreksi di percakapan bila perlu. Ini titik koreksi terpenting — lingkup yang salah di sini merambat ke semua yang berikutnya.</li>
+    <li>Ia memeriksa lingkungan dan mengunci sidik jari dokumen di <code>00-input/</code>, lalu menyusun <b>DPP</b> dan <b>berhenti</b>. Baca DPP-nya: sasaran, lingkup, risiko, hipotesis. Koreksi di percakapan bila perlu. Ini titik koreksi terpenting — lingkup yang salah di sini merambat ke semua yang berikutnya.</li>
     <li>Lanjutkan: <b>Laporan PIA</b> (dengan penilaian kelayakan), lalu analisis, <b>KKP</b>, dan <b>LHP awal</b>. Untuk LKE SPIP yang besar, ia bekerja per komponen dan memberi tahu mana yang belum.</li>
-    <li>Semua keluaran ada di <code>90-keluaran/</code>, berlabel <b>DRAF</b>.</li>
+    <li>Keluaran berlabel <b>DRAF</b>: <code>_PERENCANAAN/</code> (DPP, PIA), <code>_KKP/</code> (KKP), <code>_LHP/</code> (LHA/LHR/LHE/LP), <code>Paket-Analisis.md</code>. Tiap KKP dan LHP sudah melewati <b>QC SAIPI</b> — laporannya di <code>_QA-SAIPI/</code>.</li>
   </ol>
   <div class="c">Permintaan lanjutan bisa ditujukan ke temuan tertentu: "perbaiki T-002, tambahkan kutipan kondisi", "cek juga aspek jadwal", "T-004 bukan temuan, buang". Skill mengubah yang diminta, bukan mengulang dari nol.</div>
 </section>
 
 <section>
   <h2>4 · Periksa — bagian yang tidak boleh dilewati</h2>
+  <div class="c">Untuk <b>PK SPIP</b>, skill bisa mengisi <b>langsung di aplikasi spip.komdigi.go.id</b> (level satker atau K/L) bila Claude in Chrome tersambung dan Bapak/Ibu sudah login. Ia bertanya level dulu, mencocokkannya ke akun yang login, dan <b>berhenti di setiap batas KKE untuk ACC</b> — tidak pernah menekan Hapus atau "Copy ke data APIP".</div>
   <p>Buka <code>Paket-Analisis.md</code>. Daftar periksanya sudah terisi oleh skill; tugas Bapak/Ibu memastikan jawabannya benar. Yang paling sering salah, dan paling mahal bila lolos:</p>
   <table>
     <tr><th>Periksa</th><th>Cara cepat</th></tr>
@@ -87,7 +87,7 @@
   <h2>5 · Unggah ke INTEGRAL</h2>
   <ol>
     <li>Buka penugasan yang sesuai di INTEGRAL.</li>
-    <li>Unggah dari <code>90-keluaran/</code>: <b>DPP</b>, <b>Laporan PIA</b>, <b>KKP</b> (+ xlsx/LKE bila ada), <b>LHP awal</b>.</li>
+    <li>Unggah: <b>DPP</b> dan <b>Laporan PIA</b> (<code>_PERENCANAAN/*.docx</code>), <b>KKP</b> (<code>_KKP/</code>, + LKE bila ada), <b>LHP awal</b> (<code>_LHP/</code>).</li>
     <li>Persetujuan per temuan, laporan final, dan tindak lanjut dikerjakan di INTEGRAL. Yang ditolak dikembalikan ke Cowork dengan catatan ("perbaiki T-003: …").</li>
   </ol>
   <div class="c ok">Data penugasan diproses lewat API Anthropic — sama seperti INTEGRAL; bukan risiko baru. Yang berbeda: tiap auditor memakai langganannya sendiri, tidak ada kunci bersama.</div>
@@ -100,6 +100,8 @@
     <tr><td>Skill tidak terpicu</td><td>Sebut jenisnya: "kerjakan penugasan ini sebagai reviu RKA-K/L" — atau pastikan plugin terpasang (Customize → Plugins).</td></tr>
     <tr><td>Langsung ke temuan tanpa DPP/PIA</td><td>Hentikan, minta "susun DPP dulu". Kecuali DPP/PIA memang sudah ada di <code>00-input/</code>.</td></tr>
     <tr><td>Kriteria banyak "belum terverifikasi"</td><td>Regulasinya tidak ada di pengetahuan. Unggah teksnya ke <code>02-kriteria/</code> dan minta ulang bagian itu; kirim juga ke pengelola agar masuk plugin berikutnya.</td></tr>
+    <tr><td>Skill menyebut "QC SAIPI KRITIS"</td><td>Ada syarat SAIPI yang belum terpenuhi — lihat <code>_QA-SAIPI/laporan-qa-*.md</code>. Skill memperbaiki sumber datanya; bila KRITIS tetap ada, alasannya tercatat di daftar periksa Paket.</td></tr>
+    <tr><td>Skill menolak membuat KKP karena "00-input berubah" atau "sumber di luar manifest"</td><td>Pengaman isolasi bekerja. Pastikan dokumen yang dikutip memang ada di <code>00-input/</code> penugasan ini.</td></tr>
     <tr><td>Dokumen besar tidak selesai dibaca</td><td>Lihat §Dokumen di Paket. Minta "lanjutkan bagian X" — jangan terima klaim ketiadaan atas bagian yang belum dibaca.</td></tr>
   </table>
 </section>

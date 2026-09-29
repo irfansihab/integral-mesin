@@ -17,8 +17,8 @@ format, dokumen ini untuk pelaksanaan.
 
 ## Sumber dokumen — wajib, per kondisi
 
-Setiap kondisi menyebut `{berkas, halaman, kutipan}`; `berkas` = jalur relatif di folder
-penugasan persis seperti namanya; `halaman` = nomor halaman PDF/Word atau nama sheet Excel;
+Setiap kondisi menyebut `{file, halaman, kutipan}`; `file` = jalur berkas di `00-input/` persis
+seperti tercatat di `_SESSION-MANIFEST.json`; `halaman` = nomor halaman PDF/Word atau nama sheet Excel;
 `kutipan` = teks apa adanya (≤ 2 kalimat). Tanpa ini, kondisi itu bukan temuan.
 
 Dokumen besar: jangan menyimpulkan dari bagian awal. Bila tak sanggup membaca seluruhnya,
@@ -26,8 +26,8 @@ tulis bagian mana yang dibaca dan **jangan** membuat klaim ketiadaan atas bagian
 
 ## Kriteria — presisi & anti-mengarang
 
-1. Urutan sumber: `02-kriteria/` auditor → `wiki/konteks/regulasi/*.md` (teks pasal
-   terverifikasi, status TERVERIFIKASI di frontmatter) → `skills/<slug>/references/`.
+1. Urutan sumber: kriteria yang diunggah auditor di `00-input/` → `wiki/konteks/regulasi/*.md`
+   (teks pasal terverifikasi, status TERVERIFIKASI di frontmatter) → `skills/<slug>/references/`.
 2. Kutip **nomor pasal/ayat/huruf dan bunyinya**. Pasal yang bunyinya tidak ada di sumber
    mana pun → tulis "belum terverifikasi — perlu dicek auditor". Nomor yang terdengar masuk
    akal adalah jebakan: 38 dari 85 pola temuan pernah salah pasal karena itu.

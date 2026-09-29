@@ -57,7 +57,7 @@ _PEMICU = {
     "audit-kinerja": '"audit kinerja", "audit efektivitas", "audit program", "3E", "2E"',
     "audit-umum": '"audit umum", "audit dengan kriteria ini", "audit kepatuhan", "audit ketaatan"',
     "evaluasi-sakip": '"evaluasi SAKIP", "evaluasi AKIP", "LKE SAKIP", "nilai akuntabilitas kinerja"',
-    "evaluasi-spip": '"evaluasi SPIP", "penjaminan kualitas SPIP", "PK SPIP", "maturitas SPIP", "LKE SPIP"',
+    "evaluasi-spip": '"kerjakan PK SPIP", "isi KKLEAD", "buka aplikasi SPIP", "PK level kementerian/K-L", "penjaminan kualitas SPIP", "LKE SPIP", "maturitas SPIP"',
     "evaluasi-reformasi-birokrasi": '"evaluasi RB", "evaluasi reformasi birokrasi", "LKE RB", "zona integritas"',
     "evaluasi-manajemen-risiko": '"evaluasi manajemen risiko", "evaluasi MR", "register risiko", "piagam risiko"',
     "evaluasi-umum": '"evaluasi dengan kriteria ini", "evaluasi program", "evaluasi kebijakan"',
@@ -68,6 +68,20 @@ _PEMICU = {
     "pemantauan-tindak-lanjut": '"pemantauan tindak lanjut", "TLHP", "status rekomendasi", "tindak lanjut BPK"',
     "pemantauan-umum": '"pemantauan", "pantau realisasi", "monitoring rencana aksi"',
     "konsultansi-umum": '"konsultansi", "minta pendapat", "advisory", "pertanyaan tertulis"',
+}
+
+
+# Skrip yang ikut paket. Perender & QC dari FULL (turunan Cowork v4 yang sudah mengikuti
+# doktrin 17 Jun 2026 dan placeholder per skill); isolasi sumber dari Cowork v4.3 (FULL tak punya).
+_DARI_FULL = ("backend/v6/scripts/render_kkp.py", "backend/v6/scripts/render_lhp.py",
+              "backend/v6/scripts/qc_saipi.py", "backend/v6/scripts/audit_trail.py",
+              "backend/app/perencanaan_docx.py")
+_DARI_VENDOR = ("vendor/cowork-v4.3/generate_session_manifest.py", "vendor/cowork-v4.3/check_isolation.py")
+# Tambalan minimal. Build GAGAL bila teks sumber berubah — tambalan tak pernah diam-diam hilang.
+_TAMBAL = {
+    "qc_saipi.py": ('CHECKLIST_PATH = ROOT / "skills" / "kepatuhan-saipi" / "references" / "checklist-saipi-per-penugasan.json"',
+                    'CHECKLIST_PATH = Path(__import__("os").environ.get("INTEGRAL_CHECKLIST_SAIPI") or '
+                    'ROOT / "skills" / "kepatuhan-saipi" / "references" / "checklist-saipi-per-penugasan.json")'),
 }
 
 
@@ -162,11 +176,26 @@ def bangun(full: Path, versi: str, dengan_pdf: bool) -> tuple[Path, list[str]]:
                       encoding="utf-8")
     catatan.append(f"description dibangkitkan untuk {n_desc} skill")
 
-    # 3 · payung
+    # 3 · payung + skrip mesin (perender & QC dari FULL, isolasi dari Cowork v4.3)
     payung = DI_SINI / "payung" / NAMA
     if not (payung / "SKILL.md").is_file():
         sys.exit(f"GAGAL: skill payung tak ada di {payung}")
-    shutil.copytree(payung, build / "skills" / NAMA)
+    shutil.copytree(payung, build / "skills" / NAMA, ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".DS_Store"))
+    tujuan_skrip = build / "skills" / NAMA / "scripts"
+    for sumber in [full / s for s in _DARI_FULL] + [DI_SINI / s for s in _DARI_VENDOR]:
+        if not sumber.is_file():
+            sys.exit(f"GAGAL: skrip sumber tak ada: {sumber}")
+        teks = sumber.read_text(encoding="utf-8")
+        asal = sumber.relative_to(full) if full in sumber.parents else sumber.relative_to(DI_SINI)
+        tanda = f"# Disalin bangun.py dari {asal} — jangan disunting di paket; ubah di sumbernya.\n"
+        teks = (teks.split("\n", 1)[0] + "\n" + tanda + teks.split("\n", 1)[1]) if teks.startswith("#!") else tanda + teks
+        for nama, (a, b) in _TAMBAL.items():
+            if sumber.name == nama:
+                if a not in teks:
+                    sys.exit(f"GAGAL: teks yang ditambal di {nama} sudah berubah di hulu — periksa ulang tambalan")
+                teks = teks.replace(a, b)
+        (tujuan_skrip / sumber.name).write_text(teks, encoding="utf-8")
+    catatan.append(f"skrip mesin: {len(_DARI_FULL)} dari FULL, {len(_DARI_VENDOR)} dari vendor/cowork-v4.3")
 
     # 4 · manifest, README, VERSI
     sidik = _sidik_isi(build)
@@ -248,7 +277,10 @@ def uji(build: Path, full: Path) -> list[str]:
     cek("tak ada folder _draft / _ARSIP / tasks", not any(p.name in _KECUALI_DIR or p.name.startswith(_KECUALI_DIR_AWALAN) for p in build.rglob("*") if p.is_dir()))
     besar = sum(p.stat().st_size for p in build.rglob("*") if p.is_file()) / 1e6
     cek("ukuran ≤ 200 MB (batas unggah Cowork)", besar <= 200, f"{besar:.1f} MB")
-    for wajib in ("wiki/konteks/regulasi", "wiki/temuan-patterns", "templates/_skeleton-lhp",
+    for wajib in ("skills/integral-mesin/scripts/mesin.py", "skills/integral-mesin/scripts/render_lhp.py",
+                  "skills/integral-mesin/scripts/check_isolation.py", "meta/kepatuhan-saipi/references/checklist-saipi-per-penugasan.json",
+                  "skills/evaluasi-spip/references/aplikasi-spip/00-mode-aplikasi.md",
+                  "wiki/konteks/regulasi", "wiki/temuan-patterns", "templates/_skeleton-lhp",
                   "skills/panduan-format-umum/PANDUAN.md", "skills/panduan-format-umum/kodefikasi-temuan.md",
                   "skills/integral-mesin/references"):
         cek(f"ada: {wajib}", (build / wajib).exists())
@@ -266,6 +298,10 @@ def uji(build: Path, full: Path) -> list[str]:
         cek(f"{skrip}: {akhir[:80]}", r.returncode == 0 and akhir.startswith("LULUS"))
         if r.returncode != 0:
             print("\n".join("      " + b for b in (r.stdout + r.stderr).strip().splitlines()[-12:]))
+    print("── ujung ke ujung mesin.py pada ISI PAKET")
+    r = subprocess.run([str(py), str(DI_SINI / "uji" / "uji_mesin.py"), "--akar", str(build)], capture_output=True, text=True)
+    print("\n".join("    " + b for b in (r.stdout + r.stderr).strip().splitlines()))
+    cek("uji_mesin.py", r.returncode == 0)
     return gagal
 
 
