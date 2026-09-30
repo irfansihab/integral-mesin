@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INTEGRAL Mesin — Desain v2</title>
+<title>INTEGRAL Mesin — Desain v2 (diperbarui 30 Sep 2026)</title>
 <style>
   :root{
     --bg:#f6f7fb; --card:#fff; --ink:#1e2330; --muted:#5b6472; --line:#e5e8ef;
@@ -231,6 +231,41 @@
     <li><b>Repo Cowork</b> — disampaikan ke pemiliknya sebagai arsip, bukan dirawat.</li>
   </ol>
   <div class="callout ok"><b>Yang tidak berubah dari v1:</b> FULL tetap hulu; plugin dibangun dari <code>knowledge/</code> oleh <code>bangun.py</code>; paket yang gagal uji tidak dibungkus; semua keluaran berlabel DRAF dan diunggah manual ke INTEGRAL FREE; distribusi lewat berkas <code>.plugin</code>.</div>
+</section>
+
+<section>
+  <h2>9 · Keadaan setelah dibangun — 30 Sep 2026</h2>
+  <p>Desain di §4–§5 sudah dikerjakan; yang berubah dari rancangan dicatat di sini apa adanya.</p>
+  <table>
+    <tr><th>Rancangan</th><th>Yang jadi</th></tr>
+    <tr><td>B0 · <code>00-input/</code> bersubfolder objek/kriteria/bukti</td><td><b>Lebih sederhana:</b> auditor cukup menaruh semua dokumen di <code>00-input/</code>, subfolder boleh, tidak wajib. Semua folder kerja dibuat mesin.</td></tr>
+    <tr><td>Skill payung merangkai skrip</td><td><b>Satu pengendali</b> <code>mesin.py</code>: <code>cek · mulai · ulang-manifest · perencanaan · periksa · kkp · lhp · paket</code>, kode keluar seragam (0 · 2 · 3 · 4 · 5 · 6 · 7).</td></tr>
+    <tr><td>DPP/PIA disalin dari template oleh skill</td><td>Skill menulis <code>dpp.json</code>/<code>pia.json</code>; mesin merendernya dengan <code>export_perencanaan.render_template</code> yang <b>sama dengan server</b>, lalu ke <code>.docx</code>.</td></tr>
+    <tr><td>B2 · <code>temuan.json</code> diperiksa <code>validate_kkp_json</code></td><td><code>periksa_temuan.py</code> sendiri, lebih ketat: <code>schema_version</code>, lima field penugasan, Sebab wajib untuk KKSA, <code>dokumen_sumber</code> lengkap — <b>plus</b> <code>penilaian-aspek.json</code> berkunci <code>aspek/kesimpulan/dasar</code> (wajib untuk KKSA; ada temuan ⇒ ada butir TIDAK_SESUAI).</td></tr>
+    <tr><td>B3 · <code>render_lhp</code> dipakai apa adanya</td><td>Dipakai sebagai lapisan A1, lalu <code>lapisan_lhp.py</code> menambal yang tak dilakukan server: pernyataan SAIPI untuk semua rumpun, bab wajib QC, pengisian bagian <code>[DIISI — …]</code> lewat <code>--isian</code>, memo/RB/pendampingan.</td></tr>
+    <tr><td>B5 · uji di <code>bangun.py</code></td><td>Paket gagal tak dibungkus. Uji kutipan + doktrin bersama FULL pada isi paket, <code>uji_mesin.py</code> 19 jenis ujung ke ujung: <b>32/32, 12 bukti merah</b>.</td></tr>
+  </table>
+
+  <h3>9.1 Dijalankan sendiri pada penugasan nyata</h3>
+  <p>Reviu RKA-K/L atas TOR (2 hal.) dan RAB (1 hal.) satu RO senilai Rp2,45 M, saya bertindak sebagai agen Cowork mengikuti skill payung. Hasil: DPP dan Laporan PIA terbit (sisa <code>[BELUM DIISI]</code> hanya nomor surat, tanda tangan, anggaran penugasan); 6 temuan lolos kontrak dan isolasi; KKP dua auditor terbit dengan tabel penilaian 6 aspek Pasal 61 ayat (2); QC KKP <b>0 KRITIS</b>. LHP berhenti di QC keluar 7 karena cacat perender di bawah.</p>
+
+  <h3>9.2 Yang ketahuan hanya karena dijalankan</h3>
+  <table>
+    <tr><th>Cacat</th><th>Letak</th><th>Status</th></tr>
+    <tr><td>Kontrak <code>penilaian-aspek.json</code> memakai <code>butir/status</code>; perender membaca <code>aspek/kesimpulan</code> → tabel KKP <b>kosong tanpa pesan</b>, uji tetap hijau</td><td>plugin</td><td>✅ dibetulkan, dijaga kontrak + 3 bukti merah + pemeriksaan isi tabel</td></tr>
+    <tr><td>LHR reviu RKA menulis "Kelayakan SBM telah sesuai", "Dokumen pendukung telah lengkap" untuk <b>enam aspek yang tak pernah diuji</b> — temuan tanpa field <code>area</code> tak pernah masuk C.1–C.6</td><td><code>render_lhp.py</code> (FULL, dipakai server juga)</td><td>🔜 sumber yang benar: <code>penilaian-aspek.json</code></td></tr>
+    <tr><td>Rekomendasi diambil dari <code>temuan[].rekomendasi</code>, bukan <code>rekomendasi.json</code>; metodologi reviu memakai teks pemantauan; tim &amp; jangka waktu tak terbaca dari <code>context.md</code>; judul ganda</td><td><code>render_lhp.py</code></td><td>🔜</td></tr>
+    <tr><td>Pustaka <code>docx</code> hilang → jejak galat</td><td>plugin</td><td>✅ keluar 6 dengan pesan</td></tr>
+    <tr><td>Pengetahuan: "7 blok" RKA-01 ≠ IR2 · tak ada pola satuan &gt; SBM · SBM tanpa konsumsi rapat · SKILL.md reviu RKA menyuruh memakai digest server</td><td><code>knowledge/</code></td><td>🔜 (peta peralihan alat server→berkas sudah di skill payung)</td></tr>
+  </table>
+
+  <h3>9.3 Keputusan yang masih terbuka</h3>
+  <ol class="steps">
+    <li><b>Cacat LHR di FULL</b> — dibetulkan di lapisan mesin saja, atau sekaligus di <code>render_lhp.py</code>/<code>lhr_tools.py</code> supaya server ikut benar. Butir "telah sesuai" adalah laporan resmi yang menyatakan kepatuhan yang tak pernah diuji.</li>
+    <li><b>Uji di Cowork sungguhan</b> — pasang <code>keluaran/integral-mesin-2026.9.29.plugin</code> (bangunan 30 Sep) dan jalankan satu penugasan; yang belum terbukti hanya ketersediaan <code>python-docx</code>/<code>openpyxl</code> di sandbox.</li>
+    <li><b>Repo privat GitHub</b> untuk <code>integral-mesin</code> — belum dibuat, menunggu izin.</li>
+    <li>Setelah v2 terbukti, plugin <code>penjaminan-kualitas-spip</code> yang berdiri sendiri dicopot (isinya sudah di <code>evaluasi-spip</code>).</li>
+  </ol>
 </section>
 
 <footer>INTEGRAL Mesin · Inspektorat II Komdigi · lanjutan dari <code>docs/ARSITEKTUR-COWORK-MESIN.html</code> (repo FULL) · cek FULL 29 Sep 2026: 303 berkas, 20 kunci regulasi terverifikasi</footer>
