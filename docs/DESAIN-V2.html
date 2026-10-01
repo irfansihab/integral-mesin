@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INTEGRAL Mesin — Desain v2 (diperbarui 30 Sep 2026)</title>
+<title>INTEGRAL Mesin — Desain v2 (diperbarui 1 Okt 2026)</title>
 <style>
   :root{
     --bg:#f6f7fb; --card:#fff; --ink:#1e2330; --muted:#5b6472; --line:#e5e8ef;
@@ -253,15 +253,15 @@
   <table>
     <tr><th>Cacat</th><th>Letak</th><th>Status</th></tr>
     <tr><td>Kontrak <code>penilaian-aspek.json</code> memakai <code>butir/status</code>; perender membaca <code>aspek/kesimpulan</code> → tabel KKP <b>kosong tanpa pesan</b>, uji tetap hijau</td><td>plugin</td><td>✅ dibetulkan, dijaga kontrak + 3 bukti merah + pemeriksaan isi tabel</td></tr>
-    <tr><td>LHR reviu RKA menulis "Kelayakan SBM telah sesuai", "Dokumen pendukung telah lengkap" untuk <b>enam aspek yang tak pernah diuji</b> — temuan tanpa field <code>area</code> tak pernah masuk C.1–C.6</td><td><code>render_lhp.py</code> (FULL, dipakai server juga)</td><td>🔜 sumber yang benar: <code>penilaian-aspek.json</code></td></tr>
-    <tr><td>Rekomendasi diambil dari <code>temuan[].rekomendasi</code>, bukan <code>rekomendasi.json</code>; metodologi reviu memakai teks pemantauan; tim &amp; jangka waktu tak terbaca dari <code>context.md</code>; judul ganda</td><td><code>render_lhp.py</code></td><td>🔜</td></tr>
+    <tr><td>LHR reviu RKA menulis "Kelayakan SBM telah sesuai", "Dokumen pendukung telah lengkap" untuk <b>enam aspek yang tak pernah diuji</b> — temuan tanpa field <code>area</code> tak pernah masuk C.1–C.6</td><td><code>render_lhp.py</code> (FULL, dipakai server juga)</td><td>✅ 1 Okt — C.1–C.6 dibaca dari <code>penilaian-aspek.json</code>; tanpa penilaian → <code>[DIISI — …]</code></td></tr>
+    <tr><td>Rekomendasi diambil dari <code>temuan[].rekomendasi</code>, bukan <code>rekomendasi.json</code>; metodologi reviu memakai teks pemantauan; tim &amp; jangka waktu tak terbaca dari <code>context.md</code>; judul ganda</td><td><code>render_lhp.py</code></td><td>✅ 1 Okt — rekomendasi dari <code>rekomendasi.json</code>, metodologi reviu + SAIPI, tabel Tim 4 kolom terbaca, judul tunggal</td></tr>
     <tr><td>Pustaka <code>docx</code> hilang → jejak galat</td><td>plugin</td><td>✅ keluar 6 dengan pesan</td></tr>
-    <tr><td>Pengetahuan: "7 blok" RKA-01 ≠ IR2 · tak ada pola satuan &gt; SBM · SBM tanpa konsumsi rapat · SKILL.md reviu RKA menyuruh memakai digest server</td><td><code>knowledge/</code></td><td>🔜 (peta peralihan alat server→berkas sudah di skill payung)</td></tr>
+    <tr><td>Pengetahuan: "7 blok" RKA-01 ≠ IR2 · tak ada pola satuan &gt; SBM · SBM tanpa konsumsi rapat · SKILL.md reviu RKA menyuruh memakai digest server</td><td><code>knowledge/</code></td><td>✅ 1 Okt — RKA-01 ↔ IR2, RKA-08 baru, SBM butir 38 konsumsi rapat dari PDF, SKILL.md jalur tanpa digest</td></tr>
   </table>
 
   <h3>9.3 Keputusan yang masih terbuka</h3>
   <ol class="steps">
-    <li><b>Cacat LHR di FULL</b> — dibetulkan di lapisan mesin saja, atau sekaligus di <code>render_lhp.py</code>/<code>lhr_tools.py</code> supaya server ikut benar. Butir "telah sesuai" adalah laporan resmi yang menyatakan kepatuhan yang tak pernah diuji.</li>
+    <li><b>✅ Cacat LHR dibetulkan di FULL (1 Okt).</b> Lapisan LHP kini satu berkas <code>backend/app/lapisan_lhp.py</code> yang dipakai server dan disalin ke plugin; <code>lapisan_lhp.py</code> di payung dihapus. Penugasan contoh berdokumen nyata disimpan di <code>uji/contoh/</code> dan dijalankan <code>uji_mesin.py</code> setiap bangun (33/33).</li>
     <li><b>Uji di Cowork sungguhan</b> — pasang <code>keluaran/integral-mesin-2026.9.29.plugin</code> (bangunan 30 Sep) dan jalankan satu penugasan; yang belum terbukti hanya ketersediaan <code>python-docx</code>/<code>openpyxl</code> di sandbox.</li>
     <li><b>Repo privat GitHub</b> untuk <code>integral-mesin</code> — belum dibuat, menunggu izin.</li>
     <li>Setelah v2 terbukti, plugin <code>penjaminan-kualitas-spip</code> yang berdiri sendiri dicopot (isinya sudah di <code>evaluasi-spip</code>).</li>

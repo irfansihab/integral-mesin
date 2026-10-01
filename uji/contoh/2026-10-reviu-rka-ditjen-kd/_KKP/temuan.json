@@ -1,0 +1,190 @@
+{
+ "schema_version": "v4.0.0",
+ "generated_at": "2026-10-05T14:00:00+07:00",
+ "penugasan": {
+  "id": "2026-10-reviu-rka-ditjen-kd",
+  "nomor_st": "ST-UJI-017/IJ.3/PW.04.04/10/2026",
+  "tanggal_st": "2026-10-01",
+  "obyek": "TOR dan RAB RO Aplikasi Pemantauan Perlindungan Data Pribadi TA 2026",
+  "jenis_pengawasan": "reviu-rka-kl"
+ },
+ "temuan": [
+  {
+   "id_temuan": "T-001",
+   "sasaran_id": "S-01",
+   "judul_temuan": "TOR Tidak Memuat Lima dari Tujuh Blok Substansi Kriteria IR2 dan Belum Ditandatangani",
+   "anggota_tim": {
+    "nama_lengkap": "Auditor Uji"
+   },
+   "kondisi": "TOR RO Aplikasi Pemantauan Perlindungan Data Pribadi TA 2026 bertanggal 5 Januari 2026 terdiri atas dua halaman dengan bagian A. Latar Belakang (dasar hukum dan gambaran umum), B. Lokasi, D. Key Performance Indikator (KPI), dan F. Biaya yang Diperlukan; bagian C dan E tidak ada. Dibandingkan dengan tujuh blok Kriteria IR2, TOR tidak memuat Penerima Manfaat, Strategi Pencapaian Keluaran (metode pelaksanaan dan tahapan waktu), Kurun Waktu Pencapaian Keluaran, Analisis Biaya dan Manfaat (CBA), dan Manajemen Risiko. Gambaran umum hanya satu kalimat dan tidak memuat urgensi, permasalahan berbasis data, baseline, maupun WBS. Blok tanda tangan masih berupa \"(Nama PJ)\" dan \"NIP. [DIISI]\".",
+   "kriteria": "PMK 62/2023 jo. PMK 107/2024 Pasal 61 ayat (2) huruf d: \"kelengkapan dokumen pendukung RKA-K/L antara lain RKA Satker, kerangka acuan kerja, rincian anggaran biaya, dan dokumen pendukung terkait lainnya\" (sumber: wiki/konteks/regulasi/pmk-62-2023-jo-107-2024-pasal-61.md); Kriteria Kerangka TOR Inspektorat II (IR2) (sumber: skills/reviu-rka-kl/references/04-kriteria-substansi-tor.md): TOR/KAK memuat tujuh blok — Latar Belakang, Penerima Manfaat (dengan KPI), Strategi Pencapaian Keluaran, Kurun Waktu Pencapaian Keluaran, Biaya yang Diperlukan, Analisis Biaya dan Manfaat, dan Manajemen Risiko.",
+   "sebab": "Tidak cukup data untuk menyimpulkan penyebab",
+   "akibat": "TOR belum dapat menjadi dasar penilaian kelayakan RO: tanpa strategi, jadwal, CBA, dan matriks risiko, keselarasan RAB dengan rencana pelaksanaan tidak dapat diuji dan TOR berisiko dikembalikan pada penelaahan.",
+   "kode_kondisi": "4.401",
+   "kode_penyebab": "",
+   "kode_rekomendasi": "4.402",
+   "dokumen_sumber": [
+    {
+     "file": "00-input/TOR-App-PDP-2026.pdf",
+     "halaman": 1,
+     "kutipan": "A. LATAR BELAKANG ... 1. Dasar Hukum ... 2. Gambaran Umum ... B. Lokasi"
+    },
+    {
+     "file": "00-input/TOR-App-PDP-2026.pdf",
+     "halaman": 2,
+     "kutipan": "D. KEY PERFORMANCE INDIKATOR (KPI) ... F. BIAYA YANG DIPERLUKAN ... (Nama PJ) NIP. [DIISI]"
+    }
+   ],
+   "langkah_kerja_terkait": "Periksa keberadaan tujuh blok substansi TOR (Kriteria IR2)",
+   "pattern_id": "RKA-01",
+   "ro": "5241.QDC Aplikasi Pemantauan Perlindungan Data Pribadi",
+   "origin": "AI",
+   "status": "DRAFT"
+  },
+  {
+   "id_temuan": "T-002",
+   "sasaran_id": "S-01",
+   "judul_temuan": "Indikator RO Tidak Dilengkapi Target dan Cara Pengukuran",
+   "anggota_tim": {
+    "nama_lengkap": "Auditor Uji"
+   },
+   "kondisi": "TOR mencantumkan Indikator RO \"Tingkat pemanfaatan aplikasi pemantauan perlindungan data pribadi\" dengan Volume RO 1 Aplikasi, tanpa target nilai, satuan, maupun cara pengukuran. Bagian D. KPI hanya memuat Indikator Kinerja Program Eselon I \"Persentase Tingkat Produktivitas Adopsi Teknologi Baru\" dengan target 10%, sehingga tidak ada KPI pada tingkat RO maupun Kegiatan.",
+   "kriteria": "Kriteria Kerangka TOR Inspektorat II (IR2) (sumber: skills/reviu-rka-kl/references/04-kriteria-substansi-tor.md) butir 2.b: KPI dari target RO, Kegiatan, dan Program minimal mencantumkan indikator keberhasilan, cara mengukurnya, dan target; Perpres 29/2014 Pasal 9 ayat (3): Indikator Kinerja harus memenuhi kriteria \"a. spesifik (specific); b. dapat terukur (measurable); c. dapat dicapai (attainable); d. berjangka waktu tertentu (time bound); dan e. dapat dipantau dan dikumpulkan (trackable).\" (sumber: wiki/konteks/regulasi/perpres-29-2014-pasal-9.md)",
+   "sebab": "Tidak cukup data untuk menyimpulkan penyebab",
+   "akibat": "Keberhasilan RO tidak dapat diukur dan dievaluasi, sehingga capaian aplikasi senilai Rp2.450.000.000 tidak memiliki tolok ukur pada akhir tahun anggaran.",
+   "kode_kondisi": "4.401",
+   "kode_penyebab": "",
+   "kode_rekomendasi": "4.402",
+   "dokumen_sumber": [
+    {
+     "file": "00-input/TOR-App-PDP-2026.pdf",
+     "halaman": 1,
+     "kutipan": "Indikator RO: Tingkat pemanfaatan aplikasi pemantauan perlindungan data pribadi"
+    },
+    {
+     "file": "00-input/TOR-App-PDP-2026.pdf",
+     "halaman": 2,
+     "kutipan": "Indikator Kinerja Program (Eselon I): Persentase Tingkat Produktivitas Adopsi Teknologi Baru. Target 10%."
+    }
+   ],
+   "langkah_kerja_terkait": "Uji KPI/indikator RO: indikator, cara ukur, target",
+   "pattern_id": "RKA-02",
+   "ro": "5241.QDC Aplikasi Pemantauan Perlindungan Data Pribadi",
+   "origin": "AI",
+   "status": "DRAFT"
+  },
+  {
+   "id_temuan": "T-003",
+   "sasaran_id": "S-01",
+   "judul_temuan": "Dasar Hukum TOR Salah Menyebut Judul PMK 107/2024 dan Tidak Spesifik sampai Ayat",
+   "anggota_tim": {
+    "nama_lengkap": "Auditor Uji"
+   },
+   "kondisi": "Dasar hukum TOR huruf c berbunyi \"Peraturan Menteri Keuangan Nomor 107 Tahun 2024 tentang Penyusunan RKA-K/L, Pasal 61\". PMK 107/2024 adalah perubahan atas PMK 62/2023 tentang Perencanaan Anggaran, Pelaksanaan Anggaran, serta Akuntansi dan Pelaporan Keuangan; Pasal 61 mengatur reviu RKA-K/L oleh APIP, bukan penyusunan RKA-K/L, dan rujukannya tidak menyebut ayat.",
+   "kriteria": "Kriteria Kerangka TOR Inspektorat II (IR2) (sumber: skills/reviu-rka-kl/references/04-kriteria-substansi-tor.md) butir 1.a: dasar hukum ditulis spesifik hingga mencantumkan pasal dan/atau ayat yang relevan; judul PMK 107/2024 sesuai wiki/konteks/regulasi/pmk-62-2023-jo-107-2024-pasal-61.md.",
+   "sebab": "Tidak cukup data untuk menyimpulkan penyebab",
+   "akibat": "Dasar hukum TOR tidak dapat ditelusuri ke ketentuan yang dimaksud dan melemahkan landasan RO.",
+   "kode_kondisi": "4.404",
+   "kode_penyebab": "",
+   "kode_rekomendasi": "4.402",
+   "dokumen_sumber": [
+    {
+     "file": "00-input/TOR-App-PDP-2026.pdf",
+     "halaman": 1,
+     "kutipan": "c. Peraturan Menteri Keuangan Nomor 107 Tahun 2024 tentang Penyusunan RKA-K/L, Pasal 61;"
+    }
+   ],
+   "langkah_kerja_terkait": "Uji dasar hukum: spesifik sampai pasal/ayat dan judul peraturan benar",
+   "pattern_id": "RKA-01",
+   "ro": "5241.QDC Aplikasi Pemantauan Perlindungan Data Pribadi",
+   "origin": "AI",
+   "status": "DRAFT"
+  },
+  {
+   "id_temuan": "T-004",
+   "sasaran_id": "S-02",
+   "judul_temuan": "Honorarium Tim Pengembang Rp29.000.000 per OB Melampaui SBM TA 2026",
+   "anggota_tim": {
+    "nama_lengkap": "Irfan Sihab"
+   },
+   "kondisi": "RAB akun 521213 Belanja Honor Output Kegiatan memuat \"Honorarium tim pengembang 10 OB 29,000,000\" dengan jumlah Rp290.000.000. RAB dan TOR tidak menyebut dasar surat keputusan maupun jabatan anggota tim. Besaran per OB tersebut melampaui tarif tertinggi seluruh jabatan pada SBM butir 16 Honorarium Tim Pelaksana Kegiatan, yakni Rp2.500.000 per OB untuk Pengarah tim yang ditetapkan Keputusan Presiden; selisih terhadap tarif tertinggi itu Rp26.500.000 per OB atau Rp265.000.000 untuk 10 OB.",
+   "kriteria": "PMK 32/2025 tentang SBM TA 2026, Lampiran I (batas tertinggi) butir 16.1.1 Honorarium Tim Pelaksana Kegiatan — Pengarah Rp2.500.000 per OB (sumber: skills/reviu-rka-kl/references/02-sbm-2026-pmk-32-2025.md); PMK 62/2023 jo. PMK 107/2024 Pasal 61 ayat (2) huruf a: \"kelayakan anggaran dikaitkan dengan SBM, SBK, dan SSB yang ditetapkan\" (sumber: wiki/konteks/regulasi/pmk-62-2023-jo-107-2024-pasal-61.md).",
+   "sebab": "Tidak cukup data untuk menyimpulkan penyebab",
+   "akibat": "Alokasi honorarium berpotensi melampaui batas tertinggi SBM hingga Rp265.000.000 dan tidak dapat direalisasikan sebesar yang dianggarkan.",
+   "kode_kondisi": "4.401",
+   "kode_penyebab": "",
+   "kode_rekomendasi": "4.401",
+   "dokumen_sumber": [
+    {
+     "file": "00-input/RAB-App-PDP-2026.pdf",
+     "halaman": 1,
+     "kutipan": "521213 BELANJA HONOR OUTPUT KEGIATAN 290,000,000 Honorarium tim pengembang 10 OB 29,000,000 290,000,000"
+    }
+   ],
+   "langkah_kerja_terkait": "Bandingkan tiap satuan biaya RAB dengan SBM Lampiran I",
+   "pattern_id": "RKA-08",
+   "ro": "5241.QDC Aplikasi Pemantauan Perlindungan Data Pribadi",
+   "origin": "AI",
+   "status": "DRAFT"
+  },
+  {
+   "id_temuan": "T-005",
+   "sasaran_id": "S-02",
+   "judul_temuan": "Satuan Ukur RO pada RAB Berbeda dengan TOR",
+   "anggota_tim": {
+    "nama_lengkap": "Irfan Sihab"
+   },
+   "kondisi": "TOR mencantumkan Volume RO \"1 Aplikasi\" dan Satuan Ukur Keluaran \"Aplikasi\", sedangkan RAB untuk RO yang sama mencantumkan Volume 1 dengan Satuan Ukur \"Layanan\". TOR sendiri mengklasifikasikan RO sebagai \"QDC Layanan\".",
+   "kriteria": "PMK 62/2023 jo. PMK 107/2024 Pasal 61 ayat (2) huruf d: \"kelengkapan dokumen pendukung RKA-K/L antara lain RKA Satker, kerangka acuan kerja, rincian anggaran biaya, dan dokumen pendukung terkait lainnya\" (sumber: wiki/konteks/regulasi/pmk-62-2023-jo-107-2024-pasal-61.md); Kriteria Kerangka TOR Inspektorat II (IR2) (sumber: skills/reviu-rka-kl/references/04-kriteria-substansi-tor.md) butir 5: RAB disusun secara detail dan selaras dengan penjelasan pada Metode Pelaksanaan. Ketentuan kaidah penganggaran Pasal 14 PMK 62/2023 belum terverifikasi teksnya.",
+   "sebab": "Tidak cukup data untuk menyimpulkan penyebab",
+   "akibat": "Keluaran yang dianggarkan tidak dapat dipastikan sama dengan keluaran yang direncanakan, sehingga pengukuran capaian dan pertanggungjawaban RO berpotensi tidak konsisten.",
+   "kode_kondisi": "4.401",
+   "kode_penyebab": "",
+   "kode_rekomendasi": "4.402",
+   "dokumen_sumber": [
+    {
+     "file": "00-input/TOR-App-PDP-2026.pdf",
+     "halaman": 1,
+     "kutipan": "Klasifikasi Rincian Output: QDC Layanan ... Volume RO: 1 Aplikasi Satuan Ukur Keluaran: Aplikasi"
+    },
+    {
+     "file": "00-input/RAB-App-PDP-2026.pdf",
+     "halaman": 1,
+     "kutipan": "Volume : 1 Satuan Ukur : Layanan"
+    }
+   ],
+   "langkah_kerja_terkait": "Uji keselarasan identitas RO, volume, satuan, dan pagu antara TOR dan RAB",
+   "pattern_id": "",
+   "ro": "5241.QDC Aplikasi Pemantauan Perlindungan Data Pribadi",
+   "origin": "AI",
+   "status": "DRAFT"
+  },
+  {
+   "id_temuan": "T-006",
+   "sasaran_id": "S-02",
+   "judul_temuan": "Jasa Pengembangan Aplikasi Rp1.960.000.000 Dianggarkan sebagai Satu Paket tanpa Rincian dan Dokumen Pembentuk Harga",
+   "anggota_tim": {
+    "nama_lengkap": "Irfan Sihab"
+   },
+   "kondisi": "Komponen 5241.QDC.001.052 Pengembangan Aplikasi pada akun 522151 Belanja Jasa Profesi memuat satu baris \"Jasa pengembangan aplikasi 1 PKT 1,960,000,000\", setara 80% pagu RO. Dokumen penugasan yang diserahkan (TOR, RAB, Surat Tugas) tidak memuat rincian paket, spesifikasi, perhitungan, maupun dokumen pembentuk harga atas nilai tersebut, dan TOR tidak memuat metode pelaksanaan atau metode pengadaannya.",
+   "kriteria": "Kriteria Kerangka TOR Inspektorat II (IR2) (sumber: skills/reviu-rka-kl/references/04-kriteria-substansi-tor.md) butir 5: RAB didukung dokumen pembentuk harga untuk detail yang tidak diatur dalam PMK, dan butir 3.a: untuk kontraktual diuraikan KAK/Spektek yang dibutuhkan; PMK 62/2023 jo. PMK 107/2024 Pasal 61 ayat (2) huruf d: \"kelengkapan dokumen pendukung RKA-K/L antara lain RKA Satker, kerangka acuan kerja, rincian anggaran biaya, dan dokumen pendukung terkait lainnya\" (sumber: wiki/konteks/regulasi/pmk-62-2023-jo-107-2024-pasal-61.md).",
+   "sebab": "Tidak cukup data untuk menyimpulkan penyebab",
+   "akibat": "Kewajaran nilai Rp1.960.000.000 tidak dapat diuji, sehingga risiko kemahalan harga pada paket terbesar RO tidak terkendali sejak tahap perencanaan.",
+   "kode_kondisi": "4.401",
+   "kode_penyebab": "",
+   "kode_rekomendasi": "4.402",
+   "dokumen_sumber": [
+    {
+     "file": "00-input/RAB-App-PDP-2026.pdf",
+     "halaman": 1,
+     "kutipan": "5241.QDC.001.052 Pengembangan Aplikasi 1,960,000,000 522151 BELANJA JASA PROFESI 1,960,000,000 Jasa pengembangan aplikasi 1 PKT 1,960,000,000"
+    }
+   ],
+   "langkah_kerja_terkait": "Uji dukungan dokumen pembentuk harga untuk rincian yang tidak diatur SBM",
+   "pattern_id": "RKA-06",
+   "ro": "5241.QDC Aplikasi Pemantauan Perlindungan Data Pribadi",
+   "origin": "AI",
+   "status": "DRAFT"
+  }
+ ]
+}

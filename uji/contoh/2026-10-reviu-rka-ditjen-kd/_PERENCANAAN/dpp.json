@@ -1,0 +1,90 @@
+{
+ "skill": "reviu-rka-kl",
+ "judul_penugasan": "Reviu RKA-K/L atas TOR dan RAB RO Aplikasi Pemantauan Perlindungan Data Pribadi TA 2026",
+ "objek": "TOR dan RAB Rincian Output Aplikasi Pemantauan Perlindungan Data Pribadi (Kegiatan 5241, Program 059.GG) TA 2026",
+ "unit_kerja": "Direktorat Jenderal Ekosistem Digital (sebagaimana tertulis pada TOR dan RAB; Surat Tugas menyebut Ditjen Komunikasi Digital — perlu klarifikasi)",
+ "jenis_penugasan": "Reviu (reviu-rka-kl)",
+ "asal_substansi": "Permintaan unit melalui Nota Dinas ND-UJI-44/2026 (di luar PKPT)",
+ "nomor_st": "ST-UJI-017/IJ.3/PW.04.04/10/2026",
+ "isu_strategis": "TOR menyatakan kegiatan ini sebagai salah satu agenda prioritas Kementerian Komunikasi dan Digital tahun 2026 untuk mendukung transformasi digital nasional, dengan pagu Rp2.450.000.000 yang 80% di antaranya (Rp1.960.000.000) berupa satu paket jasa pengembangan aplikasi.",
+ "harapan_mitra": "Nota Dinas permintaan tidak termasuk dalam dokumen penugasan; harapan mitra belum dapat dirumuskan dari bukti.",
+ "dasar_hukum": [
+  "PMK 62/2023 jo. PMK 107/2024 Pasal 61 ayat (1) dan (2)",
+  "PMK 32/2025 tentang Standar Biaya Masukan TA 2026",
+  "Perpres 29/2014 Pasal 9 ayat (3) (kriteria indikator kinerja)",
+  "Kriteria Kerangka TOR Inspektorat II (IR2)"
+ ],
+ "proses_bisnis": [
+  {
+   "proses_bisnis": "Penyusunan TOR RO oleh unit pelaksana",
+   "kebijakan": "Kriteria Kerangka TOR Inspektorat II (IR2) — tujuh blok substansi"
+  },
+  {
+   "proses_bisnis": "Penyusunan RAB per komponen dan akun",
+   "kebijakan": "PMK 32/2025 tentang SBM TA 2026, Lampiran I (batas tertinggi)"
+  },
+  {
+   "proses_bisnis": "Reviu RKA-K/L oleh APIP sebelum penelaahan",
+   "kebijakan": "PMK 62/2023 jo. PMK 107/2024 Pasal 61 ayat (1) dan (2)"
+  }
+ ],
+ "titik_kritis": "Satu paket jasa senilai Rp1.960.000.000 tanpa rincian, honorarium tim pengembang per OB, dan keselarasan satuan RO antara TOR dan RAB.",
+ "fokus": "Kelengkapan substansi TOR dan kewajaran satuan biaya RAB",
+ "lokus": "RO Aplikasi Pemantauan Perlindungan Data Pribadi, Kegiatan 5241",
+ "tempus": "TA 2026 (TOR bertanggal 5 Januari 2026)",
+ "hipotesis": [
+  {
+   "sasaran": "S-01",
+   "proses_bisnis": "Penyusunan TOR",
+   "risiko": "TOR tidak memuat blok substansi wajib",
+   "hipotesis": "Sebagian blok IR2 (Penerima Manfaat, Strategi, Kurun Waktu, CBA, MR) tidak ada",
+   "langkah": "Petakan judul bagian TOR terhadap tujuh blok IR2"
+  },
+  {
+   "sasaran": "S-01",
+   "proses_bisnis": "Penyusunan TOR",
+   "risiko": "Indikator RO tidak terukur",
+   "hipotesis": "Indikator RO tanpa target dan cara ukur",
+   "langkah": "Uji indikator RO dan KPI terhadap IR2 2.b dan Perpres 29/2014 Pasal 9 ayat (3)"
+  },
+  {
+   "sasaran": "S-02",
+   "proses_bisnis": "Penyusunan RAB",
+   "risiko": "Satuan biaya melampaui SBM",
+   "hipotesis": "Honorarium per OB melampaui SBM Lampiran I butir 16",
+   "langkah": "Bandingkan tiap satuan biaya dengan SBM TA 2026"
+  },
+  {
+   "sasaran": "S-02",
+   "proses_bisnis": "Penyusunan RAB",
+   "risiko": "Rincian tanpa dasar harga",
+   "hipotesis": "Paket jasa tanpa dokumen pembentuk harga",
+   "langkah": "Telusuri rincian paket dan dokumen pendukungnya di 00-input"
+  }
+ ],
+ "metodologi": "Reviu dokumen (desk review) dengan keyakinan terbatas: penelusuran TOR dan RAB halaman demi halaman terhadap Kriteria IR2, SBM TA 2026, dan Pasal 61 ayat (2); setiap butir checklist ditutup SESUAI/TIDAK_SESUAI/TIDAK_CUKUP_DATA.",
+ "metode_sampling": "Tanpa sampling — seluruh TOR (2 halaman) dan RAB (1 halaman) ditelusuri.",
+ "tim_pengawasan": [
+  {
+   "nama": "Irfan Sihab",
+   "peran": "Ketua Tim (Auditor Madya)"
+  },
+  {
+   "nama": "Auditor Uji",
+   "peran": "Anggota (Auditor Pertama)"
+  }
+ ],
+ "rmp": "1 Oktober 2026",
+ "rpl": "10 Oktober 2026",
+ "risiko_penugasan": [
+  {
+   "risiko": "Dokumen pendukung (RKA Satker, dokumen pembentuk harga) tidak tersedia sehingga sebagian aspek tak dapat diuji",
+   "mitigasi": "Menandai aspek tersebut TIDAK_CUKUP_DATA dan meminta dokumen melalui Ketua Tim; tidak menarik simpulan tanpa dokumen"
+  },
+  {
+   "risiko": "Identitas objek pada Surat Tugas berbeda dengan TOR/RAB",
+   "mitigasi": "Mengklarifikasi kepada unit pengusul sebelum laporan diterbitkan; laporan menyebut objek sebagaimana tertulis pada TOR/RAB"
+  }
+ ],
+ "batasan_tanggung_jawab": "Reviu memberikan keyakinan terbatas; kebenaran dan kelengkapan TOR/RAB tetap tanggung jawab unit pengusul."
+}

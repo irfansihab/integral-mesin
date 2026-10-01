@@ -1,0 +1,31 @@
+{
+ "skill": "reviu-rka-kl",
+ "sasaran": [
+  {
+   "sasaran_id": "S-01",
+   "deskripsi": "Kelengkapan dan kualitas substansi TOR terhadap Kriteria IR2 dan PMK 62/2023 jo. PMK 107/2024 Pasal 61 ayat (2) huruf d",
+   "assigned_to": [
+    "Auditor Uji"
+   ],
+   "status": "DISETUJUI_KT",
+   "langkah_kerja": [
+    "Periksa keberadaan tujuh blok substansi TOR (Kriteria IR2)",
+    "Uji dasar hukum: spesifik sampai pasal/ayat dan judul peraturan benar",
+    "Uji KPI/indikator RO: indikator, cara ukur, target"
+   ]
+  },
+  {
+   "sasaran_id": "S-02",
+   "deskripsi": "Kewajaran RAB terhadap SBM TA 2026 (PMK 32/2025) dan keselarasannya dengan TOR — Pasal 61 ayat (2) huruf a dan d",
+   "assigned_to": [
+    "Irfan Sihab"
+   ],
+   "status": "DISETUJUI_KT",
+   "langkah_kerja": [
+    "Bandingkan tiap satuan biaya RAB dengan SBM Lampiran I",
+    "Uji keselarasan identitas RO, volume, satuan, dan pagu antara TOR dan RAB",
+    "Uji dukungan dokumen pembentuk harga untuk rincian yang tidak diatur SBM"
+   ]
+  }
+ ]
+}

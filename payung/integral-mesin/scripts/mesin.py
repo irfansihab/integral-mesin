@@ -213,7 +213,7 @@ def cmd_lhp(a) -> int:
     import lapisan_lhp as lap
     temuan = json.loads((d / "_KKP" / "temuan.json").read_text(encoding="utf-8"))
     jenis = temuan["penugasan"]["jenis_pengawasan"]
-    prof = lap.profil(akar(), jenis)
+    prof = lap.profil(akar() / "skills", jenis)
     gu = (a.gambaran_umum or "").strip()
     if prof == "kksa" and (len(gu) < 80 or gu.upper().startswith("[DIISI")):
         print("✗ --gambaran-umum wajib untuk LHP KKSA: 3–5 kalimat substantif (objek, nilai anggaran/HPS, "
@@ -253,7 +253,7 @@ def cmd_lhp(a) -> int:
             print(f"✗ _LHP/{berkas} belum ada — profil {prof} tidak memakai temuan KKSA untuk laporannya")
             return 4
         try:
-            out = {"memo": lap.render_memo, "rb-4dim": lap.render_rb, "pendampingan": lap.render_pendampingan}[prof](d, arg, akar())
+            out = {"memo": lap.render_memo, "rb-4dim": lap.render_rb, "pendampingan": lap.render_pendampingan}[prof](d, arg, akar() / "templates")
         except (ValueError, json.JSONDecodeError) as e:
             print(f"✗ {e}")
             return 5

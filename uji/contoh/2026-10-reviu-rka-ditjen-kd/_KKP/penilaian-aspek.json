@@ -1,0 +1,34 @@
+{
+ "aspek": [
+  {
+   "aspek": "a. Kelayakan anggaran terhadap SBM/SBK/SSB",
+   "kesimpulan": "TIDAK_SESUAI",
+   "dasar": "T-004 (honorarium Rp29.000.000/OB vs SBM Rp2.500.000/OB); konsumsi rapat Rp5.000.000/OK jauh di atas SBM butir 38 (Rp81.000/orang/kali DKI) — dicatat sebagai klarifikasi karena kemungkinan nilai paket"
+  },
+  {
+   "aspek": "b. Kepatuhan kaidah penganggaran (Pasal 14)",
+   "kesimpulan": "TIDAK_CUKUP_DATA",
+   "dasar": "teks Pasal 14 PMK 62/2023 belum terverifikasi; T-005 dicatat dari sisi keselarasan TOR–RAB"
+  },
+  {
+   "aspek": "c. Penandaan anggaran (budget tagging)",
+   "kesimpulan": "TIDAK_CUKUP_DATA",
+   "dasar": "TOR/RAB tidak memuat penandaan; RKA Satker tidak diserahkan"
+  },
+  {
+   "aspek": "d. Kelengkapan dokumen pendukung",
+   "kesimpulan": "TIDAK_SESUAI",
+   "dasar": "T-001, T-002, T-003, T-006; RKA Satker tidak diserahkan"
+  },
+  {
+   "aspek": "e. Rincian anggaran inisiatif baru/angka dasar berubah",
+   "kesimpulan": "TIDAK_CUKUP_DATA",
+   "dasar": "status inisiatif baru tidak dinyatakan pada TOR/RAB"
+  },
+  {
+   "aspek": "f. Pengalokasian tematik",
+   "kesimpulan": "TIDAK_CUKUP_DATA",
+   "dasar": "tidak ada data penandaan tematik pada dokumen yang diserahkan"
+  }
+ ]
+}

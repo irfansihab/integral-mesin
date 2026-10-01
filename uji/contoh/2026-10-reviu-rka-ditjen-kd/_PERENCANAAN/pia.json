@@ -1,0 +1,60 @@
+{
+ "skill": "reviu-rka-kl",
+ "hal": "Laporan Hasil Pengembangan Informasi Awal Reviu RKA-K/L RO Aplikasi Pemantauan Perlindungan Data Pribadi TA 2026",
+ "tujuan_surat": "Inspektur II",
+ "objek": "TOR dan RAB Rincian Output Aplikasi Pemantauan Perlindungan Data Pribadi (Kegiatan 5241, Program 059.GG) TA 2026",
+ "dasar_penugasan": [
+  "Nota Dinas Sekretaris Ditjen Komunikasi Digital Nomor ND-UJI-44/2026 tanggal 29 September 2026 (dirujuk Surat Tugas; nota dinasnya sendiri tidak ada di dokumen penugasan)",
+  "Surat Tugas Nomor ST-UJI-017/IJ.3/PW.04.04/10/2026 tanggal 1 Oktober 2026"
+ ],
+ "sasaran_kegiatan": "Menilai kelayakan permintaan reviu atas TOR dan RAB RO Aplikasi Pemantauan Perlindungan Data Pribadi TA 2026.",
+ "ruang_lingkup": "TOR dan RAB RO tersebut sebagaimana diserahkan (00-input).",
+ "tujuan_kontekstualisasi": "Memetakan posisi RO dalam Program 059.GG dan Kegiatan 5241 sebagaimana tertulis pada TOR.",
+ "tujuan_uji_eksistensi": "Memastikan TOR dan RAB yang akan direviu tersedia dan merujuk RO yang sama.",
+ "metodologi": [
+  "Penelaahan dokumen TOR dan RAB",
+  "Pembandingan identitas objek antara Surat Tugas, TOR, dan RAB"
+ ],
+ "profil_objek": "RO Aplikasi Pemantauan Perlindungan Data Pribadi (Klasifikasi RO QDC Layanan) pada Kegiatan 5241 Pengembangan Aplikasi Pemantauan PDP, Program 059.GG Penyelenggaraan Ekosistem Digital, Direktorat Jenderal Ekosistem Digital, dengan pagu Rp2.450.000.000 bersumber DIPA TA 2026 (TOR hal. 1–2; RAB hal. 1).",
+ "proses_bisnis": [
+  {
+   "proses_bisnis": "Penyusunan TOR RO oleh unit pelaksana",
+   "kebijakan": "Kriteria Kerangka TOR Inspektorat II (IR2) — tujuh blok substansi"
+  },
+  {
+   "proses_bisnis": "Penyusunan RAB per komponen dan akun",
+   "kebijakan": "PMK 32/2025 tentang SBM TA 2026, Lampiran I (batas tertinggi)"
+  },
+  {
+   "proses_bisnis": "Reviu RKA-K/L oleh APIP sebelum penelaahan",
+   "kebijakan": "PMK 62/2023 jo. PMK 107/2024 Pasal 61 ayat (1) dan (2)"
+  }
+ ],
+ "risiko_inheren": "Risiko inheren terbesar terletak pada komponen 5241.QDC.001.052 — satu paket jasa pengembangan aplikasi senilai Rp1.960.000.000 (80% pagu) yang tidak dirinci pada RAB.",
+ "isu_kritis": "(1) Kelengkapan substansi TOR; (2) honorarium tim pengembang Rp29.000.000/OB; (3) satuan RO berbeda antara TOR (Aplikasi) dan RAB (Layanan); (4) identitas unit dan nama RO pada Surat Tugas berbeda dengan TOR/RAB.",
+ "kriteria_kebijakan": "Terpenuhi — reviu RKA-K/L oleh APIP diatur PMK 62/2023 jo. PMK 107/2024 Pasal 61 ayat (1).",
+ "kriteria_saipi": "Terpenuhi — reviu dapat dilaksanakan dengan tim yang independen terhadap unit pengusul dan metodologi desk review; keyakinan terbatas dinyatakan sejak awal.",
+ "kriteria_administratif": "Terpenuhi sebagian — Surat Tugas tersedia; Nota Dinas permintaan dan RKA Satker tidak ada di dokumen penugasan.",
+ "kriteria_substansi": "Terpenuhi dengan catatan — TOR dan RAB tersedia dan merujuk RO yang sama, tetapi nama unit dan nama RO pada Surat Tugas berbeda dengan dokumen objek dan perlu diklarifikasi.",
+ "tim_pengawasan": [
+  {
+   "nama": "Irfan Sihab",
+   "peran": "Ketua Tim (Auditor Madya)"
+  },
+  {
+   "nama": "Auditor Uji",
+   "peran": "Anggota (Auditor Pertama)"
+  }
+ ],
+ "risiko_penugasan": [
+  {
+   "risiko": "Dokumen pendukung (RKA Satker, dokumen pembentuk harga) tidak tersedia sehingga sebagian aspek tak dapat diuji",
+   "mitigasi": "Menandai aspek tersebut TIDAK_CUKUP_DATA dan meminta dokumen melalui Ketua Tim; tidak menarik simpulan tanpa dokumen"
+  },
+  {
+   "risiko": "Identitas objek pada Surat Tugas berbeda dengan TOR/RAB",
+   "mitigasi": "Mengklarifikasi kepada unit pengusul sebelum laporan diterbitkan; laporan menyebut objek sebagaimana tertulis pada TOR/RAB"
+  }
+ ],
+ "simpulan_kelayakan": "Permintaan reviu layak ditindaklanjuti dengan catatan: perbedaan nama unit dan nama RO antara Surat Tugas dan TOR/RAB diklarifikasi sebelum laporan diterbitkan, dan Nota Dinas permintaan serta RKA Satker dimintakan kepada unit pengusul."
+}

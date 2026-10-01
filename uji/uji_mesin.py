@@ -182,6 +182,44 @@ def main() -> int:
                 for n, r, o in langkah:
                     if r != 0:
                         print("\n".join(f"        [{n}] {b}" for b in o.strip().splitlines()[-8:]))
+        # ── Penugasan contoh dengan dokumen nyata (uji/contoh): TOR & RAB satu RO, 6 temuan,
+        #    penilaian 6 aspek Pasal 61 ayat (2). Membuktikan yang tak terlihat di fixture sintetis:
+        #    LHR reviu RKA tak lagi menulis "telah sesuai" untuk aspek yang tak diuji (30 Sep 2026).
+        print("── penugasan contoh (uji/contoh)")
+        for sumber in sorted((Path(__file__).resolve().parent / "contoh").glob("*/")):
+            d = kerja / f"contoh-{sumber.name}"
+            shutil.copytree(sumber, d, ignore=shutil.ignore_patterns("_SESSION-MANIFEST.json", "*.docx", "_QA-SAIPI",
+                                                                       "_AUDIT-TRAIL", "Paket-Analisis.md", "DPP.md", "Laporan-PIA.md"))
+            for sub in ("_QA-SAIPI", "_AUDIT-TRAIL"):
+                shutil.rmtree(d / sub, ignore_errors=True)
+            GU_C = ("Rincian Output Aplikasi Pemantauan Perlindungan Data Pribadi berada pada Kegiatan 5241, Program 059.GG, "
+                    "Direktorat Jenderal Ekosistem Digital, dengan pagu Rp2.450.000.000 dari DIPA TA 2026.")
+            urut = [("mulai", ["mulai", str(d)]), ("perencanaan", ["perencanaan", str(d)]), ("kkp", ["kkp", str(d)]),
+                    ("lhp", ["lhp", str(d), "--judul", "Reviu RKA-K/L contoh", "--auditi", "Ditjen Ekosistem Digital",
+                             "--gambaran-umum", GU_C]), ("paket", ["paket", str(d)])]
+            hasil_c = [(n, *mesin(akar, *arg)) for n, arg in urut]
+            gagal_c = [f"{n}={r}" for n, r, _ in hasil_c if r != 0]
+            lhr = sorted((d / "_LHP").glob("LHR-*.docx"))
+            teks = ""
+            if lhr:
+                from docx import Document
+                teks = "\n".join(p.text for p in Document(str(lhr[0])).paragraphs)
+            klaim_palsu = [k for k in ("telah sesuai dengan ketentuan", "telah dipatuhi", "telah lengkap", "telah memadai", "telah sesuai arahan")
+                           if k in teks]
+            ok_c = (not gagal_c and lhr and not klaim_palsu and teks.count("Kesimpulan: Tidak Cukup Data") == 4
+                    and teks.count("Kesimpulan: Tidak Sesuai") == 2 and "Susunan tim:\n- " in teks
+                    and "LAPORAN HASIL Laporan Hasil" not in teks and "[DIISI — " not in teks)
+            rinci_c = []
+            if gagal_c: rinci_c.append("keluar " + ", ".join(gagal_c))
+            if klaim_palsu: rinci_c.append(f"klaim kepatuhan tanpa dasar: {klaim_palsu}")
+            if lhr and "[DIISI — " in teks: rinci_c.append("bagian LHP belum terisi")
+            if lhr and ("Kesimpulan: Tidak Cukup Data" not in teks or "Susunan tim:\n- " not in teks):
+                rinci_c.append("penilaian aspek / susunan tim tak terbaca di LHR")
+            cek(f"{sumber.name}: alur penuh, LHR memuat penilaian 6 aspek, tanpa klaim palsu", bool(ok_c), "; ".join(rinci_c))
+            if not ok_c:
+                for n, r, o in hasil_c:
+                    if r != 0:
+                        print("\n".join(f"        [{n}] {b}" for b in o.strip().splitlines()[-8:]))
         print("── bukti MERAH")
         d = kerja / "merah-simpulan"; susun(d, "audit-umum"); mesin(akar, "mulai", str(d))
         r, _ = mesin(akar, "lhp", str(d), "--judul", "x", "--auditi", "y", "--gambaran-umum", GU_)

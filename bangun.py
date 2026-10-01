@@ -75,7 +75,8 @@ _PEMICU = {
 # doktrin 17 Jun 2026 dan placeholder per skill); isolasi sumber dari Cowork v4.3 (FULL tak punya).
 _DARI_FULL = ("backend/v6/scripts/render_kkp.py", "backend/v6/scripts/render_lhp.py",
               "backend/v6/scripts/qc_saipi.py", "backend/v6/scripts/audit_trail.py",
-              "backend/app/perencanaan_docx.py", "backend/app/export_perencanaan.py")
+              "backend/app/perencanaan_docx.py", "backend/app/export_perencanaan.py",
+              "backend/app/lapisan_lhp.py")
 _DARI_VENDOR = ("vendor/cowork-v4.3/generate_session_manifest.py", "vendor/cowork-v4.3/check_isolation.py")
 # Tambalan minimal. Build GAGAL bila teks sumber berubah — tambalan tak pernah diam-diam hilang.
 _TAMBAL = {
