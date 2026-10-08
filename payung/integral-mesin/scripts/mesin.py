@@ -95,11 +95,39 @@ def _siapkan(d: Path) -> None:
         (d / sub).mkdir(exist_ok=True)
 
 
+_STUB_GOOGLE = {".gdoc", ".gsheet", ".gslides", ".gdraw", ".gform", ".gjam", ".gsite", ".glink"}
+
+
+def _stub_google(masukan: Path) -> list[Path]:
+    """Berkas Google-native hasil sinkronisasi Drive for Desktop.
+
+    `.gdoc`/`.gsheet`/`.gslides` BUKAN dokumen — hanya JSON kecil berisi tautan ke
+    Drive. Manifest akan menghitung sidiknya dengan patuh, lalu agen "membaca" berkas
+    yang tak berisi apa-apa, tanpa satu pun peringatan. Sudah dialami auditor saat
+    memakai Cowork dengan folder Drive. Ditolak di sini, bukan dibiarkan senyap.
+    """
+    return sorted(p for p in masukan.rglob("*") if p.is_file() and p.suffix.lower() in _STUB_GOOGLE)
+
+
+def _tolak_stub(masukan: Path) -> bool:
+    stub = _stub_google(masukan)
+    if not stub:
+        return False
+    print(f"✗ {len(stub)} berkas di 00-input/ adalah penunjuk Google Docs/Sheets/Slides, bukan dokumen — isinya tidak bisa dibaca:")
+    for s in stub:
+        print(f"   · {s.relative_to(masukan.parent)}")
+    print("  Buka tiap berkas itu di Google Drive → File → Download → Microsoft Word (.docx) / Excel (.xlsx) / PDF,"
+          " taruh hasil unduhannya di 00-input/, lalu hapus penunjuknya. Baru jalankan `mesin.py mulai` lagi.")
+    return True
+
+
 def cmd_mulai(a) -> int:
     d = _penugasan(a.penugasan)
     masukan = d / "00-input"
     if not masukan.is_dir() or not any(p.is_file() for p in masukan.rglob("*")):
         print(f"✗ {masukan} tidak ada atau kosong. Auditor menaruh SEMUA dokumen penugasan di sana (tanpa subfolder wajib).")
+        return 4
+    if _tolak_stub(masukan):
         return 4
     _siapkan(d)
     if (d / "_SESSION-MANIFEST.json").exists():
@@ -113,6 +141,8 @@ def cmd_mulai(a) -> int:
 
 def cmd_ulang_manifest(a) -> int:
     d = _penugasan(a.penugasan)
+    if _tolak_stub(d / "00-input"):
+        return 4
     _siapkan(d)
     return _jalan("generate_session_manifest.py", "--penugasan", str(d), "--force")
 

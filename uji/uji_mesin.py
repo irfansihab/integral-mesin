@@ -255,6 +255,10 @@ def main() -> int:
         d = kerja / "merah-tanpa-aspek"; susun(d, "reviu-pengadaan"); mesin(akar, "mulai", str(d))
         (d / "_KKP" / "penilaian-aspek.json").unlink()
         r, _ = mesin(akar, "kkp", str(d)); cek("jenis KKSA tanpa penilaian-aspek.json → kkp keluar 5", r == 5, f"keluar {r}")
+        d = kerja / "merah-gdoc"; susun(d, "reviu-umum")
+        (d / "00-input" / "TOR-dari-Drive.gdoc").write_text('{"url": "https://docs.google.com/open?id=x", "doc_id": "x"}', encoding="utf-8")
+        r, o = mesin(akar, "mulai", str(d))
+        cek("penunjuk .gdoc di 00-input → mulai keluar 4 dan menyebut berkasnya", r == 4 and "TOR-dari-Drive.gdoc" in o and not (d / "_SESSION-MANIFEST.json").exists(), f"keluar {r}")
         d = kerja / "merah-kosong"; (d / "00-input").mkdir(parents=True)
         r, _ = mesin(akar, "mulai", str(d)); cek("00-input kosong → mulai keluar 4", r == 4, f"keluar {r}")
     finally:

@@ -29,6 +29,10 @@ Jangan merangkai skrip lain sendiri, dan jangan menyunting `.docx` hasil mesin d
 1. Folder penugasan hanya perlu berisi **`00-input/`** dengan semua dokumen (Surat Tugas,
    sasaran, dokumen objek, kriteria tambahan, bukti lapangan — subfolder boleh, tidak wajib).
    Bila dokumen ada di akar folder tanpa `00-input/`, **minta izin** auditor sebelum memindahkannya.
+   **Folder yang tersinkron Google Drive:** berkas `.gdoc`/`.gsheet`/`.gslides` hanyalah penunjuk
+   tanpa isi — `mesin.py mulai` menolaknya (keluar 4). Minta auditor mengunduhnya sebagai
+   `.docx`/`.xlsx`/PDF ke `00-input/`; jangan mencoba membaca dokumen itu lewat tautannya, karena
+   isinya tidak masuk manifest dan tak bisa dikutip dengan halaman.
 2. `mesin.py cek` — memeriksa `python-docx`, `openpyxl`, kerangka LHP, dan teks regulasi.
    Keluar 6 → coba `pip install python-docx openpyxl`; bila tetap gagal, katakan terus terang
    dan pakai skill docx sebagai cadangan dengan catatan "format tidak dijamin".
