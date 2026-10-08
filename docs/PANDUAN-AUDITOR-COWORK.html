@@ -53,6 +53,7 @@
                   KAK/HPS/kontrak, LK, LKE, …), regulasi/SOP tambahan, bukti lapangan.
                   Subfolder boleh, tidak wajib.</pre>
   <p><b>Cukup satu folder itu.</b> Semua yang lain — konteks, DPP, PIA, KKP, LHP, hasil QC, Paket — dibuat skill. Dokumen yang <b>wajib</b> per jenis pengawasan tercantum di masing-masing skill; yang tidak ada dicatat sebagai keterbatasan, bukan dikarang.</p>
+  <div class="c warn"><b>Folder di Google Drive boleh dipakai, tetapi dokumen Google Docs/Sheets/Slides harus diunduh dulu.</b> Di komputer, berkas Google-native hanya berupa penunjuk <code>.gdoc</code>/<code>.gsheet</code>/<code>.gslides</code> tanpa isi — itulah sebab Cowork dulu "tidak bisa membaca" dokumen dari Drive. Buka dokumennya → File → Download → Word/Excel/PDF, taruh hasilnya di <code>00-input/</code>, hapus penunjuknya. Skill menolak memulai bila masih ada penunjuk, dan menyebut berkas mana. Pastikan juga sinkronisasi Drive selesai (tidak ada ikon awan pada berkas) sebelum memulai.</div>
   <div class="c warn"><b>Setelah dimulai, isi <code>00-input/</code> dikunci sidik jarinya.</b> Bila Bapak/Ibu menambah atau mengganti dokumen, beri tahu skill — ia membuat ulang manifest dan memeriksa ulang temuan yang terdampak. Perubahan diam-diam akan ditolak saat KKP/LHP dibuat.</div>
 </section>
 
@@ -101,6 +102,7 @@
     <tr><td>Langsung ke temuan tanpa DPP/PIA</td><td>Hentikan, minta "susun DPP dulu". Kecuali DPP/PIA memang sudah ada di <code>00-input/</code>.</td></tr>
     <tr><td>Kriteria banyak "belum terverifikasi"</td><td>Regulasinya tidak ada di pengetahuan. Unggah teksnya ke <code>02-kriteria/</code> dan minta ulang bagian itu; kirim juga ke pengelola agar masuk plugin berikutnya.</td></tr>
     <tr><td>Skill menyebut "QC SAIPI KRITIS"</td><td>Ada syarat SAIPI yang belum terpenuhi — lihat <code>_QA-SAIPI/laporan-qa-*.md</code>. Skill memperbaiki sumber datanya; bila KRITIS tetap ada, alasannya tercatat di daftar periksa Paket.</td></tr>
+    <tr><td>Skill menolak memulai: "berkas … adalah penunjuk Google Docs/Sheets/Slides"</td><td>Dokumen itu belum berisi apa-apa di komputer. Unduh dari Drive sebagai Word/Excel/PDF ke <code>00-input/</code>, hapus berkas <code>.gdoc</code>/<code>.gsheet</code>-nya, mulai lagi.</td></tr>
     <tr><td>Skill menolak membuat KKP karena "00-input berubah" atau "sumber di luar manifest"</td><td>Pengaman isolasi bekerja. Pastikan dokumen yang dikutip memang ada di <code>00-input/</code> penugasan ini.</td></tr>
     <tr><td>Dokumen besar tidak selesai dibaca</td><td>Lihat §Dokumen di Paket. Minta "lanjutkan bagian X" — jangan terima klaim ketiadaan atas bagian yang belum dibaca.</td></tr>
   </table>
