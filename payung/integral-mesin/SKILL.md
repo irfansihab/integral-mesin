@@ -21,7 +21,7 @@ Semua keluaran adalah **DRAF** — persetujuan dilakukan auditor di INTEGRAL, bu
 
 **Akar plugin** = dua tingkat di atas folder skill ini (berisi `skills/`, `wiki/`, `templates/`,
 `meta/`, `VERSI.txt`). Semua dokumen keluaran dibuat oleh **`mesin.py`**:
-`python3 <akar>/skills/integral-mesin/scripts/mesin.py <perintah> <folder-penugasan>`.
+`python3 <akar>/skills/integral-mesin/scripts/mesin.py <perintah> <folder-penugasan>`. Bila `python3` tidak ada (Windows), pakai `python` atau `py -3` — skripnya sama; ia memakai interpreter yang menjalankannya untuk semua langkah berikutnya.
 Jangan merangkai skrip lain sendiri, dan jangan menyunting `.docx` hasil mesin dengan tangan.
 
 ## 0 · Mulai — auditor cukup menyiapkan `00-input/`

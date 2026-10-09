@@ -295,6 +295,22 @@ def uji(build: Path, full: Path) -> list[str]:
     py = full / "backend" / ".venv" / "bin" / "python"
     if not py.exists():
         py = full / "backend" / ".venv" / "Scripts" / "python.exe"
+    # Frontmatter SKILL.md harus YAML sah menurut parser SUNGGUHAN (PyYAML di venv FULL).
+    # Parser buatan di bangun.py dan di server memaafkan apa saja; Cowork tidak — metadata
+    # dibuang diam-diam dan skill tak terpicu (8–9 Okt 2026, 18 dari 19 skill).
+    r = subprocess.run([str(py), "-c", "import re,sys,yaml,pathlib\n"
+                        "g=[]\n"
+                        "for f in sorted(pathlib.Path(sys.argv[1]).glob('skills/*/SKILL.md')):\n"
+                        "    m=re.match(r'^---\\n(.*?)\\n---', f.read_text(encoding='utf-8'), re.S)\n"
+                        "    try: assert isinstance(yaml.safe_load(m.group(1)), dict)\n"
+                        "    except Exception as e: g.append(f'{f.parent.name}: {getattr(e, \"problem\", e)}')\n"
+                        "print('\\n'.join(g)); sys.exit(1 if g else 0)", str(build)], capture_output=True, text=True)
+    cek("frontmatter semua SKILL.md sah menurut PyYAML", r.returncode == 0, r.stdout.strip()[:300])
+    # Validator resmi, bila CLI `claude` ada di mesin pembangun.
+    if shutil.which("claude"):
+        r = subprocess.run(["claude", "plugin", "validate", str(build)], capture_output=True, text=True)
+        galat = [b.strip() for b in (r.stdout + r.stderr).splitlines() if "❯" in b]
+        cek("`claude plugin validate` tanpa galat", r.returncode == 0 and not galat, (galat[0][:200] if galat else (r.stdout + r.stderr).strip()[-200:]))
     env = dict(os.environ, PYTHONPATH=str(full / "backend"),
                APP_SKILLS_PATH=str(build / "skills"), APP_WIKI_PATH=str(build / "wiki"))
     for skrip in ("uji_doktrin_bersama.py", "uji_kutipan_pola.py"):
