@@ -164,8 +164,13 @@ def cmd_perencanaan(a) -> int:
         f = ep.template_fields(a.field, a.skill)
         tpl = ep.resolve_template(a.field, a.skill)
         print(f"── template {tpl.relative_to(akar()) if tpl else '(tak ada)'}")
-        print("  wajib   : " + ", ".join(f["field_required"]))
-        print("  opsional: " + ", ".join(f["field_optional"]))
+        shapes, docs = ep.template_shapes(a.field, a.skill), ep.template_docs(a.field, a.skill)
+        for label, kunci in (("WAJIB", f["field_required"]), ("opsional", f["field_optional"])):
+            print(f"  {label}:")
+            for k in kunci:
+                b = shapes.get(k, {"bentuk": "teks"})
+                bentuk = {"daftar": f"daftar objek {b.get('kolom')}", "daftar_teks": "daftar teks", "teks": "teks"}[b["bentuk"]]
+                print(f"    {k:26} {bentuk:48} {docs.get(k, '')}")
         return 0 if tpl else 4
     if not a.penugasan:
         print("✗ sebutkan folder penugasan, atau --field dpp|pia untuk melihat daftar field")
@@ -190,6 +195,14 @@ def cmd_perencanaan(a) -> int:
             if tpl is None:
                 print(f"✗ template {jenis} tak ada di paket")
                 return 4
+            # Bentuk field dicek SEBELUM dirender: `{{#each}}` yang menerima teks membuang
+            # bloknya diam-diam → tabel kosong. Server menolak hal yang sama.
+            salah = ep.validasi_fields(jenis, a.skill or fields.get("skill"), fields)
+            if salah:
+                print(f"✗ {data.relative_to(d)} melanggar bentuk template ({len(salah)} hal) — lihat `mesin.py perencanaan --field {jenis}`:")
+                for s in salah:
+                    print(f"   ✗ {s}")
+                return 5
             md.write_text(ep.render_template(tpl.read_text(encoding="utf-8-sig"), fields), encoding="utf-8")
             kosong = [k for k in ep.template_fields(jenis, a.skill or fields.get("skill"))["field_required"]
                       if not fields.get(k)]

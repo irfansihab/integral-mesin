@@ -255,6 +255,13 @@ def main() -> int:
         d = kerja / "merah-tanpa-aspek"; susun(d, "reviu-pengadaan"); mesin(akar, "mulai", str(d))
         (d / "_KKP" / "penilaian-aspek.json").unlink()
         r, _ = mesin(akar, "kkp", str(d)); cek("jenis KKSA tanpa penilaian-aspek.json → kkp keluar 5", r == 5, f"keluar {r}")
+        d = kerja / "merah-dpp-bentuk"; susun(d, "reviu-umum"); mesin(akar, "mulai", str(d))
+        (d / "_PERENCANAAN").mkdir(exist_ok=True)
+        (d / "_PERENCANAAN" / "dpp.json").write_text(json.dumps({"judul_penugasan": "Uji", "objek": "Objek",
+            "hipotesis": "Diduga ada deviasi pada proses X — teks panjang, bukan daftar",
+            "tim_pengawasan": [{"nama": "Auditor Uji"}]}), encoding="utf-8")
+        r, o = mesin(akar, "perencanaan", str(d))
+        cek("dpp.json: hipotesis berupa teks & tim tanpa kolom peran → perencanaan keluar 5", r == 5 and "hipotesis" in o and "peran" in o, f"keluar {r}")
         d = kerja / "merah-gdoc"; susun(d, "reviu-umum")
         (d / "00-input" / "TOR-dari-Drive.gdoc").write_text('{"url": "https://docs.google.com/open?id=x", "doc_id": "x"}', encoding="utf-8")
         r, o = mesin(akar, "mulai", str(d))
